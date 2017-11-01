@@ -1,3 +1,6 @@
+import java.util.Set;
+import java.util.TreeSet;
+
 public class PTLeaf implements INode{
 
     String key;
@@ -37,5 +40,20 @@ public class PTLeaf implements INode{
     public INode getFather() {
         return this.father;
     }
+
+    @Override
+    public TreeSet<PTEdge> getSons() {
+        return null;
+    }
+
+    @Override
+    public void removeSon(PTEdge edge) {
+    }
+
+    @Override
+    public void printTree() {
+        System.out.println("Leaf: key: " + key + " value :" + value);
+    }
+
 
 }

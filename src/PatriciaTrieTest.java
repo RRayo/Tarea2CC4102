@@ -8,7 +8,7 @@ class PatriciaTrieTest {
 
     @Test
     void Rsearch() {
-        PTRoot testRootNode = new PTRoot();
+        PTNode testRootNode = new PTNode();
         INode testleafLeft = new PTLeaf("romane$" , 1); //omane
         PTEdge testEdgeLeft = new PTEdge("romane$",testleafLeft);
         INode testleafRight = new PTLeaf("rubber$" , 2); //ubber
@@ -27,7 +27,7 @@ class PatriciaTrieTest {
     }
 
 
-
+/*
     @Test
     void firstLeaf() {
         PTRoot testRootNode = new PTRoot();
@@ -49,20 +49,20 @@ class PatriciaTrieTest {
 
         assertEquals("rubber$",ptTest.firstLeaf(testRootNode).key, "Should've return \"rubber$\", as root does not have a left node");
     }
-
+*/
     @Test
     void LCP() {
-        PTRoot testRootNode = new PTRoot();
+        PTNode testRootNode = new PTNode();
         PatriciaTrie ptTest = new PatriciaTrie(testRootNode);
         assertEquals("rub", ptTest.LCP("rubber","rub"), "Should've return rub");
         assertEquals("", ptTest.LCP("rubber","jerry"), "Should've return empty");
         assertEquals("", ptTest.LCP("","jerry"), "Should've return empty");
     }
 
-/*
+
     @Test
     void insert() {
-        PTRoot testRootNode = new PTRoot();
+        PTNode testRootNode = new PTNode();
         PatriciaTrie ptTest = new PatriciaTrie(testRootNode);
 
         ptTest.insert("romane",1);
@@ -86,7 +86,17 @@ class PatriciaTrieTest {
         ptTest.insert("rubicundus",7);
         assertEquals(7,ptTest.search("rubicundus"), "Should've return 7, as rubicundus is in the tree");
 
+        ptTest.insert("zar",8);
+        assertEquals(8,ptTest.search("zar"), "Should've return 8, as zar is in the tree");
 
+        ptTest.insert("zarajevo", 9);
+        assertEquals(9,ptTest.search("zarajevo"), "Should've return 9, as zar is in the tree");
+
+        ptTest.insert("hilter",10);
+        assertEquals(10,ptTest.search("hilter"), "Should've return 10, as hilter is in the tree");
+
+        ptTest.insert("himler",11);
+        assertEquals(11,ptTest.search("himler"), "Should've return 11, as himler is in the tree");
     }
-   */
+
 }

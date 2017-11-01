@@ -1,9 +1,8 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.TreeSet;
 
 public class PTNode implements INode{
 
-        Set<PTEdge> sons = new HashSet<PTEdge>();
+        TreeSet<PTEdge> sons = new TreeSet<PTEdge>();
         INode father;
 
 
@@ -38,14 +37,43 @@ public class PTNode implements INode{
 
 
     public void addSon(PTEdge sonEdge) {
-                this.sons.add(sonEdge);
-                sonEdge.setNodeFather(this);
+        this.sons.add(sonEdge);
+        sonEdge.setNodeFather(this);
             }
 
     @Override
     public INode getFather() {
         return this.father;
     }
+
+    @Override
+    public TreeSet<PTEdge> getSons() {
+        return this.sons;
+    }
+
+    @Override
+    public void removeSon(PTEdge edge) {
+        this.sons.remove(edge);
+    }
+
+    public void printTree() {
+        for (PTEdge son : sons) {
+            System.out.println("Node Edge: " + son.word);
+            son.node.printTree();
+        }
+    }
+
+    public PTEdge descendRoot(String word, int i){
+    String compare = word.substring(i, word.length());
+        for (PTEdge edge : sons){
+        if (!PatriciaTrie.LCP(word, edge.word).equals("")){
+            return edge;
+        }
+    }
+    //No puede descender por ninguna de las hojas.
+        return null;
+}
+
 
 
 }

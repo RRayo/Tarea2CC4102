@@ -2,10 +2,10 @@ import java.util.ArrayList;
 
 public class PatriciaTrie {
 
-    public static PTRoot root;
+    public static PTNode root;
 
 
-    public PatriciaTrie(PTRoot root) {
+    public PatriciaTrie(PTNode root) {
         this.root = root;
     }
 
@@ -33,7 +33,7 @@ public class PatriciaTrie {
             if(descendEdge == null) { // o quedo a la mitad o en un nodo no pudo bajar
                 return node;
             }
-            //sigue descendiendo
+            //sigue descendiendo}
             return Rsearch(descendEdge.node, word, index + descendEdge.word.length());
         }
     }
@@ -42,15 +42,23 @@ public class PatriciaTrie {
 
     void insert(String word, int value) {
         //Se realiza la busqueda y se ve hasta donde llego
-        INode searchResult = Rsearch(this.root, word + "$", 0);
-        PTLeaf leaf;
-        if (searchResult.isLeaf()) {
-            leaf = (PTLeaf) searchResult;
-        } else {//fallo en un nodo
-            leaf = firstLeaf(searchResult);
+        word = word + "$";
+        if (this.root.descendRoot(word,0) == null){
+            PTLeaf leafNode = new PTLeaf(word, value);
+            PTEdge leafEdge = new PTEdge(word , leafNode);
+            this.root.addSon(leafEdge);
+        } else {
+            INode searchResult = Rsearch(this.root, word, 0);
+            PTLeaf leaf;
+            if (searchResult.isLeaf()) {
+                leaf = (PTLeaf) searchResult;
+            } else {//fallo en un nodo
+
+                leaf = firstLeaf(searchResult, word);
+            }
+            //va a descender desde la raiz hasta llegar a su ubicacion final
+            insertFromLeaf(this.root, LCP(leaf.key, word), word, value, 0);
         }
-        //va a descender desde la raiz hasta llegar a su ubicacion final
-        insertFromLeaf(this.root, LCP(leaf.key, word), word, value, 0);
     }
 
 
@@ -59,16 +67,15 @@ public class PatriciaTrie {
         PTEdge descendEdge = node.descend(word, index);
         String comparateWord = p.substring(index, p.length());
         if(descendEdge == null) { //no puedo descender, debo ver la razon
-            PTNode insertNode = (PTNode)descendEdge.node;
-            for (PTEdge edge : insertNode.sons) {
-                if (!edge.prefixOf(word) && edge.word.charAt(0) == comparateWord.charAt(0)) {
+            for (PTEdge edge : node.getSons()) {
+                if (edge.word.startsWith(comparateWord)) {
                     //Quedo en mitad de una arista
                     //corta arista no se propaga, solo corta
-                    PTNode splitNode = (PTNode)edge.node;//nodo el cual desciende de la arista
+
 
                     //Se crea nuevo nodo a la mitad de la aritsa
-                    String newNodeEdgeWord = p.substring(p.length()-edge.word.length()+1, p.length());
-                    PTNode newNode = new PTNode(insertNode);
+                    String newNodeEdgeWord = LCP(comparateWord, edge.word);
+                    PTNode newNode = new PTNode(node);
                     PTEdge newEdge = new PTEdge(newNodeEdgeWord, newNode);
 
                     //nuevo arco es p corrido en indice
@@ -78,9 +85,10 @@ public class PatriciaTrie {
                     PTEdge leafEdge = new PTEdge(leafEdgeWord, newLeaf);
 
                     //insertNode.replaceSon(node, newNode);
-                    insertNode.sons.remove(edge);
-                    insertNode.addSon(newEdge);
-                    PTEdge nodeEdge = new PTEdge(CLCP(edge.word, newNodeEdgeWord),splitNode);
+                    node.removeSon(edge);
+                    node.addSon(newEdge);
+
+                    PTEdge nodeEdge = new PTEdge(CLCP(edge.word, newNodeEdgeWord),edge.node);
                     newNode.addSon(leafEdge);
                     newNode.addSon(nodeEdge);
                     return;
@@ -93,7 +101,8 @@ public class PatriciaTrie {
             node.addSon(leafEdge);
 
         } else {//sigo descendiendo
-            insertFromLeaf(descendEdge.node, p,  word, value,index + descendEdge.word.length());
+            int newIndex = index + descendEdge.word.length() > p.length() ?  index + comparateWord.length(): index + descendEdge.word.length();
+            insertFromLeaf(descendEdge.node, p,  word, value, newIndex);
         }
 
     }
@@ -101,34 +110,22 @@ public class PatriciaTrie {
 
     //Metodos auxiliares
 
-    public static PTLeaf firstLeaf(INode node) {
+    //Busca la mejor hoja
+
+    public static PTLeaf firstLeaf(INode node, String word) {
         if(node.isLeaf()) {
             return (PTLeaf) node;
-        }
-        if(node.getFather() == null){
-            PTRoot rtnode = (PTRoot) node;
-            if(rtnode.sons.isEmpty()) {
-                return null;
-            }
-            for(PTEdge sonNode : rtnode.sons) {
-                PTLeaf result = firstLeaf(sonNode.node);
-                if(result != null) {
-                    return result;
-                }
-            }
         } else {
-            PTNode ptnode = (PTNode) node;
-            if(ptnode.sons.isEmpty()) {
-                return null;
-            }
-            for(PTEdge sonNode : ptnode.sons) {
-                PTLeaf result = firstLeaf(sonNode.node);
-                if(result != null) {
-                    return result;
+            int bestLength = 0;
+            PTLeaf bestLeaf = null;
+            for(PTEdge edge : node.getSons()) {
+                PTLeaf candidateLeaf = firstLeaf(edge.node, word);
+                if (candidateLeaf!= null && LCP(candidateLeaf.key, word).length() > bestLength) {
+                    bestLeaf = candidateLeaf;
                 }
             }
+            return bestLeaf;
         }
-        return null;
     }
 
 
