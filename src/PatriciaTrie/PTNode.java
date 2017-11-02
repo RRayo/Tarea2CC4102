@@ -1,3 +1,5 @@
+package PatriciaTrie;
+
 import java.util.TreeSet;
 
 public class PTNode implements INode{
@@ -56,12 +58,12 @@ public class PTNode implements INode{
         this.sons.remove(edge);
     }
 
-    public void printTree() {
+   /* public void printTree() {
         for (PTEdge son : sons) {
             System.out.println("Node Edge: " + son.word);
             son.node.printTree();
         }
-    }
+    }*/
 
     public PTEdge descendRoot(String word, int i){
     String compare = word.substring(i, word.length());

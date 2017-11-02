@@ -1,3 +1,5 @@
+package PatriciaTrie;
+
 import junit.framework.TestCase;
 
 class PTNodeTest {

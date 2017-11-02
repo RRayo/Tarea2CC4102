@@ -1,3 +1,5 @@
+package PatriciaTrie;
+
 public class PTEdge implements Comparable<PTEdge> {
     String word;
     INode node;

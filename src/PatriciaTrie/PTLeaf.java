@@ -1,18 +1,20 @@
-import java.util.Set;
+package PatriciaTrie;
+
+import Dictionary.Diccionario;
+
+import java.util.ArrayList;
 import java.util.TreeSet;
 
 public class PTLeaf implements INode{
 
-    String key;
-    int value;
+    Diccionario diccionario = new Diccionario();
 
     INode father;
 
     public PTLeaf(){}
 
     public PTLeaf(String key, int value) {
-        this.key = key;
-        this.value = value;
+        this.diccionario = new Diccionario(key, value);
     }
 
     @Override
@@ -50,10 +52,21 @@ public class PTLeaf implements INode{
     public void removeSon(PTEdge edge) {
     }
 
-    @Override
+    public String getKey(){
+        return this.diccionario.key;
+    }
+
+    public void addValue(int v) {
+        this.diccionario.add(v);
+    }
+
+    public ArrayList<Integer> getValues(){
+        return this.diccionario.valor;
+    }
+    /*@Override
     public void printTree() {
         System.out.println("Leaf: key: " + key + " value :" + value);
     }
-
+*/
 
 }

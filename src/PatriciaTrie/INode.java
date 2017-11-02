@@ -1,3 +1,4 @@
+package PatriciaTrie;
 
 import java.util.TreeSet;
 
@@ -9,5 +10,5 @@ public interface INode {
      INode getFather();
      TreeSet<PTEdge> getSons();
      void removeSon(PTEdge edge);
-     void printTree();
+     //void printTree();
 }

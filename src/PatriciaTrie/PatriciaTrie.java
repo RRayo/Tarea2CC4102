@@ -1,6 +1,10 @@
+package PatriciaTrie;
+
+import Dictionary.IDiccionarioStruct;
+
 import java.util.ArrayList;
 
-public class PatriciaTrie {
+public class PatriciaTrie implements IDiccionarioStruct{
 
     public static PTNode root;
 
@@ -10,17 +14,18 @@ public class PatriciaTrie {
     }
 
 
-    int search(String word){
-        INode searchResult = Rsearch(this.root, word + "$", 0);
+    @Override
+    public ArrayList<Integer> buscar(String s){
+        INode searchResult = Rsearch(this.root, s + "$", 0);
         if(searchResult == null || !searchResult.isLeaf()) {
-            return -1;
+            return new ArrayList<Integer>();
         } else {
             PTLeaf result = (PTLeaf) searchResult;
-            if(result.key.equals(word + "$")) {
-                return result.value;
+            if(result.getKey().equals(s + "$")) {
+                return result.getValues();
             }
         }
-        return -1;
+        return new ArrayList<Integer>();
     }
 
 
@@ -39,25 +44,25 @@ public class PatriciaTrie {
     }
 
 
-
-    void insert(String word, int value) {
+    @Override
+    public void insertar(String s, int posc) {
         //Se realiza la busqueda y se ve hasta donde llego
-        word = word + "$";
-        if (this.root.descendRoot(word,0) == null){
-            PTLeaf leafNode = new PTLeaf(word, value);
-            PTEdge leafEdge = new PTEdge(word , leafNode);
+        s = s + "$";
+        if (this.root.descendRoot(s,0) == null){
+            PTLeaf leafNode = new PTLeaf(s, posc);
+            PTEdge leafEdge = new PTEdge(s , leafNode);
             this.root.addSon(leafEdge);
         } else {
-            INode searchResult = Rsearch(this.root, word, 0);
+            INode searchResult = Rsearch(this.root, s, 0);
             PTLeaf leaf;
             if (searchResult.isLeaf()) {
                 leaf = (PTLeaf) searchResult;
             } else {//fallo en un nodo
 
-                leaf = firstLeaf(searchResult, word);
+                leaf = firstLeaf(searchResult, s);
             }
             //va a descender desde la raiz hasta llegar a su ubicacion final
-            insertFromLeaf(this.root, LCP(leaf.key, word), word, value, 0);
+            insertFromLeaf(this.root, LCP(leaf.getKey(), s), s, posc, 0);
         }
     }
 
@@ -102,6 +107,16 @@ public class PatriciaTrie {
 
         } else {//sigo descendiendo
             int newIndex = index + descendEdge.word.length() > p.length() ?  index + comparateWord.length(): index + descendEdge.word.length();
+            if(descendEdge.node.isLeaf()){
+                PTLeaf leaf = (PTLeaf) descendEdge.node;
+                if(leaf.getKey().equals(word)){
+                    leaf.addValue(value);
+                    PTEdge newEdge = new PTEdge(descendEdge.word, leaf);
+                    node.removeSon(descendEdge);
+                    node.addSon(newEdge);
+                    return;
+                }
+            }
             insertFromLeaf(descendEdge.node, p,  word, value, newIndex);
         }
 
@@ -120,7 +135,7 @@ public class PatriciaTrie {
             PTLeaf bestLeaf = null;
             for(PTEdge edge : node.getSons()) {
                 PTLeaf candidateLeaf = firstLeaf(edge.node, word);
-                if (candidateLeaf!= null && LCP(candidateLeaf.key, word).length() > bestLength) {
+                if (candidateLeaf!= null && LCP(candidateLeaf.getKey(), word).length() > bestLength) {
                     bestLeaf = candidateLeaf;
                 }
             }
@@ -149,5 +164,6 @@ public class PatriciaTrie {
         }
         return (s1.length()>s2.length()) ? s1.substring(minLength, s1.length()) : s2.substring(minLength, s2.length());
     }
+
 
 }
