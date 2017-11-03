@@ -8,7 +8,8 @@ import java.util.ArrayList;
 
 public class ABTree implements IDiccionarioStruct{
 
-    public static IABTNode root;
+    public static IABTNode root = new ABTNullNode();
+    public ABTree() { }
     public ABTree(IABTNode root) {
         this.root = root;
     }
@@ -97,5 +98,5 @@ public class ABTree implements IDiccionarioStruct{
             updateValue(descendNode, word, value, newIndex);
         }
     }
-
+//<:()<-<
 }

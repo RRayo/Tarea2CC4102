@@ -62,8 +62,7 @@ class PatriciaTrieTest {
 
     @Test
     void insert() {
-        PTNode testRootNode = new PTNode();
-        PatriciaTrie ptTest = new PatriciaTrie(testRootNode);
+        PatriciaTrie ptTest = new PatriciaTrie();
 
         ptTest.insertar("romane",1);
         assertEquals(1,ptTest.buscar("romane").get(0).intValue(), "Should've return 1, as romane is in the tree");

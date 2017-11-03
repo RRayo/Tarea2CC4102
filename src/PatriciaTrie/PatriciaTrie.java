@@ -6,12 +6,14 @@ import java.util.ArrayList;
 
 public class PatriciaTrie implements IDiccionarioStruct{
 
-    public static PTNode root;
+    public static PTNode root = new PTNode();
 
 
     public PatriciaTrie(PTNode root) {
         this.root = root;
     }
+
+    public PatriciaTrie() { }
 
 
     @Override

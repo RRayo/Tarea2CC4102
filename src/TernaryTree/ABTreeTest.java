@@ -35,7 +35,7 @@ class ABTreeTest {
     void rinsert() {
 
         IABTNode testRoot = new ABTNullNode();
-        ABTree testTree = new ABTree(testRoot);
+        ABTree testTree = new ABTree();
         testTree.insertar("b", 1);
         assertEquals(testTree.buscar("b").get(0).intValue(), 1,"The search should've return 1, as b is in the trie");
         assertEquals('b', ABTree.root.getChar(),"The root should have character 'b'");

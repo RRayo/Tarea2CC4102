@@ -1,25 +1,28 @@
 package PatriciaTrie;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 
 class PTNodeTest {
-    @org.junit.jupiter.api.Test
+    @Test
     void isLeaf() {
         INode leaf = new PTLeaf();
-        TestCase.assertTrue("leaf should be a leaf",leaf.isLeaf());
+        assertTrue(leaf.isLeaf(), "leaf should be a leaf");
 
         INode node = new PTNode();
-        TestCase.assertFalse("node shouldn't be a leaf", node.isLeaf());
+        assertFalse(node.isLeaf(), "node shouldn't be a leaf");
 
         node.addSon(new PTEdge("",leaf));
-        TestCase.assertFalse("node shouldn't be a leaf anymore", node.isLeaf());
+        assertFalse(node.isLeaf(), "node shouldn't be a leaf anymore");
 
         INode root = new PTNode();
-        TestCase.assertFalse("root shouldn't be a leaf", root.isLeaf());
+        assertFalse(root.isLeaf(), "root shouldn't be a leaf");
 
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void descend() {
         PTNode testRootNode = new PTNode();
 
@@ -33,17 +36,16 @@ class PTNodeTest {
         testRootNode.addSon(testEdgeLeft);
         testRootNode.addSon(testEdgeRight);
 
-        TestCase.assertNotNull("romane should descend to left node, it gives null instead",
-                testRootNode.descend("romane", 1));
+        assertNotNull(testRootNode.descend("romane", 1), "romane should descend to left node, it gives null instead");
 
-        TestCase.assertSame("romane should descend to left node",testEdgeLeft.word,
-                testRootNode.descend("romane", 1).word);
+        assertSame(testEdgeLeft.word,
+                testRootNode.descend("romane", 1).word, "romane should descend to left node");
 
         /*
         TestCase.assertSame("Rub should descend to right node",testEdgeRight.word,
                 testRootNode.descend("rubber", 1).word);
           */
-        TestCase.assertNull("Blah shouldn't descend",testRootNode.descend("blah", 1));
+        assertNull(testRootNode.descend("blah", 1), "Blah shouldn't descend");
     }
 
 }
