@@ -6,8 +6,8 @@ import Dictionary.IDiccionarioStruct;
 import java.util.ArrayList;
 
 public class LinearProbing implements IDiccionarioStruct {
-    int k, elementos;
-    Diccionario[] tabla;
+    public int k, elementos;
+    public Diccionario[] tabla;
 
     public LinearProbing(int k) {
         this.k = k-1;

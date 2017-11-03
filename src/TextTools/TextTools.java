@@ -44,22 +44,23 @@ public class TextTools {
 				Path path = FileSystems.getDefault().getPath("texts", archivo); 
 				
 				try (BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
-				    String line = null;
-				    while ((line = reader.readLine()) != null) {
-				    	line = line.toLowerCase();
-				        line = line.replaceAll(this.REGEX, "");
-				        line = line.trim().replaceAll(" +", " ");
-				        String[] lineas = line.split(" ");
-				        if(lineas[0].length() == 0) {
-				        	continue;
-				        }
-				        for (String p: lineas) {
-				        	this.patriciaTree.insertar(p, this.numPalabras);
-				        	this.ABT.insertar(p, this.numPalabras);
-				        	this.hashLinearProb.insertar(p, this.numPalabras);
-				        	this.numPalabras++;
-				        }
-				    }
+					String line = null;
+					while ((line = reader.readLine()) != null) {
+						line = line.toLowerCase();
+						line = line.replaceAll("['\"]+", "");
+						line = line.replaceAll(this.REGEX, " ");
+						line = line.trim().replaceAll(" +", " ");
+						String[] lineas = line.split(" ");
+						if(lineas[0].length() == 0) {
+							continue;
+						}
+						for (String p: lineas) {
+							this.patriciaTree.insertar(p, this.numPalabras);
+							this.ABT.insertar(p, this.numPalabras);
+							this.hashLinearProb.insertar(p, this.numPalabras);
+							this.numPalabras++;
+						}
+					}
 				} catch (IOException x) {
 				    System.err.format("IOException: %s%n", x);
 				}
@@ -83,7 +84,8 @@ public class TextTools {
 		    String line = null;
 		    while ((line = reader.readLine()) != null) {
 		    	line = line.toLowerCase();
-		        line = line.replaceAll(regex, "");
+				line = line.replaceAll("+['\"]", "");
+		        line = line.replaceAll(regex, " ");
 		        line = line.trim().replaceAll(" +", " ");
 		        String[] lineas = line.split(" ");
 		        if(lineas[0].length() == 0) {
@@ -122,12 +124,17 @@ public class TextTools {
 	public static double similitud(String T1, String T2, IDiccionarioStruct D1, IDiccionarioStruct D2, String s) {
 		ArrayList<String> palabrasT1 = leerArchivo(T1);
 		ArrayList<String> palabrasT2 = leerArchivo(T2);
-		
+
+		//TODO medir el tiempo
 		llenarDiccionarioStatic(D1, palabrasT1, s);
 		llenarDiccionarioStatic(D2, palabrasT2, s);
-		
+		//TODO medir el tiempo
+
+
 		double sum = 0;
-		
+
+
+		//TODO medir el tiempo
 		for (String p : palabrasT1) {
 			sum += Math.abs(count(p, D1)- count(p, D2)); //TODO se puede optimizar solo sumando el largo de palabrasT1 en este caso y solo buscar en D2
 		}
@@ -135,12 +142,13 @@ public class TextTools {
 		for (String p : palabrasT2) {
 			sum += Math.abs(count(p, D1)- count(p, D2));
 		}
-		
+		//TODO medir el tiempo
+
 		return 1 - (sum / (palabrasT1.size()+palabrasT2.size()));
 	}
 	
 	
-	public static int count(String palabra, IDiccionarioStruct D) { //TODO generar diccionario a partir del archivo y buscar la palabra en el
+	public static int count(String palabra, IDiccionarioStruct D) {
 		return D.buscar(palabra).size();
 	}
 	
