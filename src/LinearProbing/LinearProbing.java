@@ -2,6 +2,7 @@ package LinearProbing;
 
 import Dictionary.Diccionario;
 import Dictionary.IDiccionarioStruct;
+import TextTools.TextTools;
 
 import java.util.ArrayList;
 
@@ -60,6 +61,7 @@ public class LinearProbing implements IDiccionarioStruct {
     }
 
     public static void main (String [ ] args) {
+        /*
         LinearProbing L = new LinearProbing(200);
         Diccionario[] d = L.tabla;
         System.out.println("Largo tabla: "+d.length);
@@ -78,11 +80,14 @@ public class LinearProbing implements IDiccionarioStruct {
                 //System.out.println(i+":  "+d[i]);
             }
         }
-        /*
+        */
+
         System.out.println("Shrek: " + TextTools.count("shrek.txt"));
-        System.out.println("Shrek 3: " + TextTools.count("shrek3.txt"));
+        System.out.println("Bane rises: " + TextTools.count("baneRises.txt"));
+        System.out.println("Lyrics1: " + TextTools.count("lyrics1.txt"));
+        System.out.println("Lyrics2: " + TextTools.count("lyrics2.txt"));
         System.out.println("Shakespeare: " + TextTools.count("shakespeare.txt"));
         System.out.println("Bible: " + TextTools.count("bible.txt"));
-        */
+
     }
 }

@@ -26,21 +26,22 @@ class LinearProbingTest {
     @Test
     void insertYbuscar() {
 
+
         LinearProbing linPtest10 = new LinearProbing(10);
 
         linPtest10.insertar("barco", 1);
-        assertEquals(linPtest10.buscar("barco").get(0), 1, "La busqueda de barco debio retornar 1");
+        assertEquals(linPtest10.buscar("barco").get(0).intValue(), 1, "La busqueda de barco debio retornar 1");
 
 
         assertNull(linPtest10.buscar("caballo"), "Al no encontrar el elemento debio retornar null");
 
         linPtest10.insertar("aaaaaaa", 9999999);
-        assertEquals(linPtest10.buscar("aaaaaaa").get(0), 9999999, "La busqueda de aaaaaaa debio retornar 9999999");
+        assertEquals(linPtest10.buscar("aaaaaaa").get(0).intValue(), 9999999, "La busqueda de aaaaaaa debio retornar 9999999");
 
         linPtest10.insertar("barco", 2);
-        assertEquals(linPtest10.buscar("barco").get(0), 1, "La busqueda de barco debio retornar 1, " +
+        assertEquals(linPtest10.buscar("barco").get(0).intValue(), 1, "La busqueda de barco debio retornar 1, " +
                 "luego de insertar barco de nuevo");
-        assertEquals(linPtest10.buscar("barco").get(1), 2, "La busqueda de barco debio retornar 2" +
+        assertEquals(linPtest10.buscar("barco").get(1).intValue(), 2, "La busqueda de barco debio retornar 2" +
                 "como segundo elemento");
 
 
