@@ -29,8 +29,8 @@ public class Experimentos {
         this.timeTesting(abTree, palabras, "ABTree");
         this.timeTesting(patriciaTree, palabras, "PatriciaTree");
 
-        double elementosHash = hashLinearProbing.elementos
-        double porcentajeLlenado = elementosHash/n); //TODO revisar si sirve
+        double elementosHash = hashLinearProbing.elementos;
+        double porcentajeLlenado = elementosHash/n; //TODO revisar si sirve
         System.out.println("Porcentaje de llenado de tabla hash:\t" + porcentajeLlenado);
 
 
@@ -44,7 +44,7 @@ public class Experimentos {
         //ArrayList<String> palabras1 = TextTools.leerArchivo(archivo1);
         //ArrayList<String> palabras2 = TextTools.leerArchivo(archivo2);
 
-        LinearProbing hashLinearProbing = new LinearProbing(k);
+        LinearProbing hashLinearProbing = new LinearProbing(factor);
         IDiccionarioStruct abTree = new ABTree(new ABTNullNode());
         IDiccionarioStruct patriciaTree = new PatriciaTrie(new PTNode());
 
