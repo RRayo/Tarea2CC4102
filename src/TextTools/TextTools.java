@@ -122,28 +122,23 @@ public class TextTools {
 	}
 	
 	
-	public static double similitud(String T1, String T2, IDiccionarioStruct D1, IDiccionarioStruct D2, String s) {
-		ArrayList<String> palabrasT1 = leerArchivo(T1);
-		ArrayList<String> palabrasT2 = leerArchivo(T2);
-
-		//TODO medir el tiempo
-		llenarDiccionarioStatic(D1, palabrasT1, s);
-		llenarDiccionarioStatic(D2, palabrasT2, s);
-		//TODO medir el tiempo
-
+	public static double similitud(ArrayList<String> palabrasT1, ArrayList<String> palabrasT2
+			, IDiccionarioStruct D, String s, String tipo) {
 
 		double sum = 0;
 
 
-		//TODO medir el tiempo
+		long i = System.currentTimeMillis();
 		for (String p : palabrasT1) {
-			sum += Math.abs(count(p, D1)- count(p, D2)); //TODO se puede optimizar solo sumando el largo de palabrasT1 en este caso y solo buscar en D2
+			sum += Math.abs(count(p, D)- count(p, D)); //TODO se puede optimizar solo sumando el largo de palabrasT1 en este caso y solo buscar en D2
 		}
 		
 		for (String p : palabrasT2) {
-			sum += Math.abs(count(p, D1)- count(p, D2));
+			sum += Math.abs(count(p, D)- count(p, D));
 		}
-		//TODO medir el tiempo
+		long f = System.currentTimeMillis();
+
+		System.out.println("Tiempo total de insercion para " + tipo + ":\t" + (f-i));
 
 		return 1 - (sum / (palabrasT1.size()+palabrasT2.size()));
 	}

@@ -41,16 +41,19 @@ public class Experimentos {
     }
 
     public Experimentos (String archivo1, String archivo2, int factor) {
-        //ArrayList<String> palabras1 = TextTools.leerArchivo(archivo1);
-        //ArrayList<String> palabras2 = TextTools.leerArchivo(archivo2);
+        ArrayList<String> palabras1 = TextTools.leerArchivo(archivo1);
+        ArrayList<String> palabras2 = TextTools.leerArchivo(archivo2);
+
+        int n = palabras1.size() + palabras2.size();
+        int k = n*factor;
 
         LinearProbing hashLinearProbing = new LinearProbing(factor);
         IDiccionarioStruct abTree = new ABTree(new ABTNullNode());
         IDiccionarioStruct patriciaTree = new PatriciaTrie(new PTNode());
 
-        TextTools.similitud(archivo1, archivo2, hashLinearProbing, hashLinearProbing, "");
-        TextTools.similitud(archivo1, archivo2, abTree, abTree, "");
-        TextTools.similitud(archivo1, archivo2, patriciaTree, patriciaTree, "");
+        TextTools.similitud(palabras1, palabras2, hashLinearProbing, "", "LinearProbing");
+        TextTools.similitud(palabras1, palabras2, abTree, "$", "ABTree");
+        TextTools.similitud(palabras1, palabras2, patriciaTree, "", "PatriciaTree");
 
     }
 
@@ -67,17 +70,37 @@ public class Experimentos {
         System.out.println("Tiempo total de insercion para " + tipo + ":\t" + (f-i));
     }
 
+    public void timeTesting (IDiccionarioStruct d, ArrayList<String> palabras1,
+                             ArrayList<String> palabras2 , String tipo) {
+        String letraFinal = "";
+        if (tipo.equals("ABTree")) {
+            letraFinal = "$";
+        }
+        long i = System.currentTimeMillis();
+        TextTools.llenarDiccionarioStatic(d, palabras1, letraFinal);
+        TextTools.llenarDiccionarioStatic(d, palabras2, letraFinal);
+        long f = System.currentTimeMillis();
+
+        System.out.println("Tiempo total de insercion para " + tipo + ":\t" + (f-i));
+
+    }
+
     public void searchTesting (IDiccionarioStruct d, ArrayList<String> palabras, String tipo, int n) {
         Stack st = this.randomNumbersStack(0, n, n/10);
 
-        long i = System.currentTimeMillis();
+        String[] tiemposPorLargo = new String[50]; //arreglo con la contabilidad de tiempo en base al largo
+
+
         while (!st.empty()) {
             int p = (Integer) st.pop();
+            long i = System.currentTimeMillis();
             d.buscar(palabras.get(p));
+            long f = System.currentTimeMillis();
+            tiemposPorLargo[palabras.get(p).length()] += i + "_" +f + "$";
         }
-        long f = System.currentTimeMillis();
 
-        System.out.println("Tiempo total de busqueda para " + tipo + "con " + n/10 + " elementos" + ":\t" + (f-i) );
+
+        //System.out.println("Tiempo total de busqueda para " + tipo + "con " + n/10 + " elementos" + ":\t" + (f-i) );
     }
 
     public Stack randomNumbersStack(int min, int max, int n) {
