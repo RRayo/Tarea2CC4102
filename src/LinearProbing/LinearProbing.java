@@ -80,14 +80,27 @@ public class LinearProbing implements IDiccionarioStruct {
                 //System.out.println(i+":  "+d[i]);
             }
         }
+
+
         */
 
-        System.out.println("Shrek: " + TextTools.count("shrek.txt"));
-        System.out.println("Bane rises: " + TextTools.count("baneRises.txt"));
+        for(int i = 0; i<4; i++){
+            String prefix = i<=4 ? "0" : "";
+            System.out.println("x" + prefix +i + ": " + TextTools.count("/524288/x"+ prefix + i + ".txt"));
+        }
+
         System.out.println("Lyrics1: " + TextTools.count("lyrics1.txt"));
         System.out.println("Lyrics2: " + TextTools.count("lyrics2.txt"));
+
+        //System.out.println("Bible: " + TextTools.count("524288/big.txt"));
+
+        //System.out.println("x01: " + TextTools.count("/65536/80day10.txt"));
+
+        /*System.out.println("Shrek: " + TextTools.count("shrek.txt"));
+        System.out.println("Bane rises: " + TextTools.count("baneRises.txt"));
+
         System.out.println("Shakespeare: " + TextTools.count("shakespeare.txt"));
         System.out.println("Bible: " + TextTools.count("bible.txt"));
-
+*/
     }
 }
