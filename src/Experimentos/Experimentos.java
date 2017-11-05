@@ -47,7 +47,7 @@ public class Experimentos {
         int n = palabras1.size() + palabras2.size();
         int k = n*factor;
 
-        LinearProbing hashLinearProbing = new LinearProbing(factor);
+        LinearProbing hashLinearProbing = new LinearProbing(k);
         IDiccionarioStruct abTree = new ABTree(new ABTNullNode());
         IDiccionarioStruct patriciaTree = new PatriciaTrie(new PTNode());
 
