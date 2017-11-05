@@ -30,7 +30,7 @@ public class PTEdge implements Comparable<PTEdge> {
     }
 
     public int getSize(){
-        return 16 + 2*this.word.length() + 8 + node.getSize();
+        return 16 + 2*this.word.length() + 8;
         //16 base + 2 bytes por caracter + 8 de referencia nodo + tamaño del nodo
     }
 }

@@ -16,7 +16,7 @@ public class ABTree implements IDiccionarioStruct{
 
     @Override
     public ArrayList<Integer> buscar (String s) {
-        IABTNode result = Rsearch(root, s, 0);
+        IABTNode result = Isearch(root, s, 0);
         if(!result.getKey().equals(s)){
             return new ArrayList<Integer>();
         } else {
@@ -24,27 +24,31 @@ public class ABTree implements IDiccionarioStruct{
         }
     }
 
-    public static IABTNode Rsearch (IABTNode node, String word, int index) {
-        if (index == word.length()) {
-            return node;
-        } else {
+    public static IABTNode Isearch (IABTNode node, String word, int index) {
+        while(!(index == word.length())) {
             IABTNode descendNode = node.getSon(node.descend(word.charAt(index)));
             int newIndex = index;
             if (node.getChar() == word.charAt(index)) {
                 newIndex += 1;
             }
-            return descendNode.isNull() ? node : Rsearch(descendNode, word, newIndex);
+
+            if(descendNode.isNull()) {
+                break;
+            } else {
+                index = newIndex;
+                node = descendNode;
             }
         }
-
+        return node;
+    }
 
     @Override
     public void insertar(String s, int posc) {
-        System.out.println(s);
+        //System.out.println(s);
         if(root.isNull()) {
             root = new ABTNode(s.charAt(0));
         }
-        IABTNode searchResult = Rsearch(root, s, 0);
+        IABTNode searchResult = Isearch(root, s, 0);
         String subString = s.substring(LCP(searchResult.getKey(),s).length(), s.length());
         if(subString.equals("")){
             updateValue(root, s, posc,0);
@@ -61,22 +65,19 @@ public class ABTree implements IDiccionarioStruct{
     }
 
     public static void Rinsert(IABTNode node, String subString, int index, String word, int value) {
-        if(index == subString.length() - 1 && node.getChar() == subString.charAt(index)) {
-            node.setKey(word, value);
-        } else {
+        while (!(index == subString.length() - 1 && node.getChar() == subString.charAt(index))) {
             int descend = node.descend(subString.charAt(index));
             IABTNode descendNode = node.getSon(descend);
-            if(descendNode.isNull()) {
-                if(descend == 1){
-                    Rinsert(node.updateNode(subString, index), subString, index + 1, word, value);
-                } else {
-                    Rinsert(node.updateNode(subString, index), subString, index, word, value);
+            if (descendNode.isNull()) {
+                node = node.updateNode(subString, index);
+                if (descend == 1) {
+                    index += 1;
                 }
-
             } else {
-                Rinsert(descendNode, subString, index, word, value);
+                node = descendNode;
             }
         }
+        node.setKey(word, value);
     }
 
     public static String LCP (String s1, String s2) {
@@ -90,9 +91,7 @@ public class ABTree implements IDiccionarioStruct{
     }
 
     public static void updateValue (IABTNode node, String word, int value, int index) {
-        if (index == word.length()) {
-            node.addValue(value);
-        } else {
+        while(!(index == word.length())) {
             IABTNode descendNode = node.getSon(node.descend(word.charAt(index)));
             int newIndex = index;
             if (node.getChar() == word.charAt(index)) {
@@ -102,8 +101,10 @@ public class ABTree implements IDiccionarioStruct{
                     return;
                 }
             }
-            updateValue(descendNode, word, value, newIndex);
+            index = newIndex;
+            node = descendNode;
         }
+        node.addValue(value);
     }
 //<:()<-<
 }
