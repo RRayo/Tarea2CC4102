@@ -3,6 +3,7 @@ package TernaryTree;
 import Dictionary.Diccionario;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class ABTNode implements IABTNode{
 
@@ -72,11 +73,26 @@ public class ABTNode implements IABTNode{
 
     @Override
     public int getSize() {
-        int sonsSize = 0;
-        for(IABTNode son : this.sons){
-            sonsSize += 4 + son.getSize();
+        Stack<IABTNode> stack = new Stack<>();
+        IABTNode node;
+        stack.push(this);
+        int totalSize = 0;
+        while(!stack.empty()) {
+            node = stack.pop();
+            totalSize += 16; //tamaño base
+            if(!node.isNull()){
+                ABTNode abtnode = (ABTNode)node;
+                for(IABTNode son : abtnode.sons){
+                    totalSize += 4; //costo de un puntero
+                    if(son.isNull()){
+                        totalSize+=16;
+                    } else {
+                        stack.push(son);
+                    }
+                }
+            }
         }
-        return 16 + sonsSize;
+        return totalSize;
     }
 
     public char getChar() {

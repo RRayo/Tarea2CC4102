@@ -1,5 +1,6 @@
 package PatriciaTrie;
 
+import java.util.Stack;
 import java.util.TreeSet;
 
 public class PTNode implements INode{
@@ -60,13 +61,31 @@ public class PTNode implements INode{
 
     @Override
     public int getSize() {
-        int edgeSize = 0;
-        for(PTEdge edge : this.sons) {
-            edgeSize += edge.getSize();
+        Stack<INode> stack = new Stack<>();
+        INode node;
+        stack.push(this);
+        int totalSize = 0;
+        while(!stack.empty()) {
+            node = stack.pop();
+            if(!node.isLeaf()){
+                totalSize += 24; //tamaño base + puntero a padre
+                PTNode ptnode = (PTNode)node;
+                for(PTEdge edge : ptnode.sons){
+                    totalSize += 4; //costo de un puntero
+                    totalSize += edge.getSize();
+                    if(edge.node.isLeaf()){
+                        totalSize += edge.node.getSize();
+                    } else {
+                        stack.push(edge.node);
+                    }
+                }
+            } else { //es hoja
+                totalSize += node.getSize();
+            }
         }
-        return 16 + 8 + edgeSize;
-        //16 base +8 ref padre + peso de los arcos
+        return totalSize;
     }
+
 
    /* public void printTree() {
         for (PTEdge son : sons) {
@@ -76,11 +95,11 @@ public class PTNode implements INode{
     }*/
 
     public PTEdge descendRoot(String word, int i){
-    String compare = word.substring(i, word.length());
+        String compare = word.substring(i, word.length());
         for (PTEdge edge : sons){
-        if (!PatriciaTrie.LCP(word, edge.word).equals("")){
-            return edge;
-        }
+            if (!PatriciaTrie.LCP(word, edge.word).equals("")){
+                return edge;
+            }
     }
     //No puede descender por ninguna de las hojas.
         return null;
