@@ -27,7 +27,7 @@ public class ExperimentoSimilitud extends AbstractExperimento{
             directorios[i-10] = String.valueOf((int)java.lang.Math.pow(2,i));
 
         }
-        
+
         for(String dir : directorios) {
         	if(dir == null) {
         		continue;
