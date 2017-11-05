@@ -34,7 +34,7 @@ class ABTreeTest {
     @Test
     void rinsert() {
 
-        IABTNode testRoot = new ABTNullNode();
+        /*IABTNode testRoot = new ABTNullNode();
         ABTree testTree = new ABTree();
         testTree.insertar("b", 1);
         assertEquals(testTree.buscar("b").get(0).intValue(), 1,"The search should've return 1, as b is in the trie");
@@ -92,8 +92,49 @@ class ABTreeTest {
 
         testTree.insertar("ii", 15);
         assertEquals(testTree.buscar("ii").get(0).intValue(), 15,"The search should've return 15, as 'ii' is in the trie");
+*/
 
-        //ABTree.root.printTree();
+        ABTree testTree = new ABTree();
+        testTree.insertar("shrek$", 1);
+        testTree.insertar("written$", 2);
+        testTree.insertar("by$", 3);
+        testTree.insertar("william$", 4);
+        testTree.insertar("steig$", 5);
+        testTree.insertar("ted$", 6);
+        testTree.insertar("elliott$", 7);
+        testTree.insertar("once$", 8);
+        testTree.insertar("upon$", 9);
+        testTree.insertar("a$", 10);
+        testTree.insertar("time$", 11);
+        testTree.insertar("there$", 12);
+        testTree.insertar("was$", 13);
+        testTree.insertar("lovely$", 14);
+        testTree.insertar("princess$", 15);
+        testTree.insertar("but$", 16);
+        testTree.insertar("she$", 17);//
+        testTree.insertar("had$", 18);
+        testTree.insertar("an$", 19);
+        testTree.insertar("enchantment$", 20);
+        testTree.insertar("her$", 21);
+        testTree.insertar("of$", 22);
+        testTree.insertar("fearful$", 23);
+        testTree.insertar("sort$", 24);
+        testTree.insertar("which$", 25);
+        testTree.insertar("could$", 26);
+        testTree.insertar("only$", 27);
+        testTree.insertar("be$", 28);
+        testTree.insertar("broken$", 29);
+        testTree.insertar("love$", 30);
+        testTree.insertar("s$", 31);
+        testTree.insertar("first$", 32);
+        testTree.insertar("kiss$", 33);
+
+        ABTree.root.printTree();
+
+        testTree.insertar("she$", 34);
+
+
+        ABTree.root.printTree();
 
         System.out.println(testTree.getSize());
 

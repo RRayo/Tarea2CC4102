@@ -13,6 +13,7 @@ public class ABTree implements IDiccionarioStruct{
     public ABTree(IABTNode root) {
         this.root = root;
     }
+    //public ArrayList<String> palabras = new ArrayList<>();
 
     @Override
     public ArrayList<Integer> buscar (String s) {
@@ -50,10 +51,19 @@ public class ABTree implements IDiccionarioStruct{
         }
         IABTNode searchResult = Isearch(root, s, 0);
         String subString = s.substring(LCP(searchResult.getKey(),s).length(), s.length());
-        if(subString.equals("")){
-            updateValue(root, s, posc,0);
+        if(searchResult.getKey().equals(s)){
+            searchResult.addValue(posc);
+            //updateValue(root, s, posc,0);
         } else {
-            Rinsert(searchResult, subString, 0, s, posc);
+            /*if(palabras.contains(s)){
+                System.out.println("ERROR");
+                System.out.println(searchResult.getKey());
+                System.out.println(s);
+                System.exit(-1);
+            }*/
+            Iinsert(searchResult, subString, 0, s, posc);
+            //palabras.add(s);
+            //System.out.println(s);
         }
 
     }
@@ -64,12 +74,16 @@ public class ABTree implements IDiccionarioStruct{
         //16 base + 8 ref raiz + tamaño arbol
     }
 
-    public static void Rinsert(IABTNode node, String subString, int index, String word, int value) {
+    public static void Iinsert(IABTNode node, String subString, int index, String word, int value) {
         while (!(index == subString.length() - 1 && node.getChar() == subString.charAt(index))) {
+
+
             int descend = node.descend(subString.charAt(index));
             IABTNode descendNode = node.getSon(descend);
+
+
             if (descendNode.isNull()) {
-                node = node.updateNode(subString, index);
+                node = node.updateNode(subString, word, index);
                 if (descend == 1) {
                     index += 1;
                 }

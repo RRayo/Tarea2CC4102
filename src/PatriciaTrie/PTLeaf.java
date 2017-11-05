@@ -69,10 +69,11 @@ public class PTLeaf implements INode{
     public ArrayList<Integer> getValues(){
         return this.diccionario.valor;
     }
-    /*@Override
+
+    @Override
     public void printTree() {
-        System.out.println("Leaf: key: " + key + " value :" + value);
+        System.out.println("Leaf: key: " + this.diccionario.key );
     }
-*/
+
 
 }
