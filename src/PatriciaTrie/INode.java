@@ -10,5 +10,5 @@ public interface INode {
      INode getFather();
      TreeSet<PTEdge> getSons();
      void removeSon(PTEdge edge);
-     //void printTree();
+     int getSize();
 }

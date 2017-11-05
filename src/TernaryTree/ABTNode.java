@@ -70,6 +70,15 @@ public class ABTNode implements IABTNode{
         this.diccionario.add(v);
     }
 
+    @Override
+    public int getSize() {
+        int sonsSize = 0;
+        for(IABTNode son : this.sons){
+            sonsSize += 4 + son.getSize();
+        }
+        return 16 + sonsSize;
+    }
+
     public char getChar() {
         return this.s;
     }

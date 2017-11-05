@@ -58,6 +58,16 @@ public class PTNode implements INode{
         this.sons.remove(edge);
     }
 
+    @Override
+    public int getSize() {
+        int edgeSize = 0;
+        for(PTEdge edge : this.sons) {
+            edgeSize += edge.getSize();
+        }
+        return 16 + 8 + edgeSize;
+        //16 base +8 ref padre + peso de los arcos
+    }
+
    /* public void printTree() {
         for (PTEdge son : sons) {
             System.out.println("Node Edge: " + son.word);

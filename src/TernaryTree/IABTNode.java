@@ -13,4 +13,5 @@ public interface IABTNode {
     IABTNode updateNode(String word, int index);
     void printTree();
     void addValue(int v);
+    int getSize();
 }

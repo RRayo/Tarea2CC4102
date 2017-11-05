@@ -52,6 +52,12 @@ public class PTLeaf implements INode{
     public void removeSon(PTEdge edge) {
     }
 
+    @Override
+    public int getSize() {
+        return 16 + this.diccionario.getSize() + 8;
+        //16 bytes de base + tamaño diccionario + 8 bytes ref padre
+    }
+
     public String getKey(){
         return this.diccionario.key;
     }

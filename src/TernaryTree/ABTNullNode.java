@@ -54,4 +54,10 @@ public class ABTNullNode implements IABTNode{
 
     }
 
+    @Override
+    public int getSize() {
+        return 16;
+        //tamaño base
+    }
+
 }

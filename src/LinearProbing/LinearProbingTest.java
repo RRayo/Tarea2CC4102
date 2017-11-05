@@ -29,6 +29,8 @@ class LinearProbingTest {
 
         LinearProbing linPtest10 = new LinearProbing(10);
 
+        System.out.println(linPtest10.getSize());
+
         linPtest10.insertar("barco", 1);
         assertEquals(linPtest10.buscar("barco").get(0).intValue(), 1, "La busqueda de barco debio retornar 1");
 
@@ -45,6 +47,7 @@ class LinearProbingTest {
                 "como segundo elemento");
 
 
+        System.out.println(linPtest10.getSize());
     }
 
 }

@@ -69,6 +69,7 @@ public class PatriciaTrie implements IDiccionarioStruct{
     }
 
 
+
     static void insertFromLeaf(INode node, String p, String word, int value, int index) {
         //veo si puedo descender
         PTEdge descendEdge = node.descend(word, index);
@@ -124,10 +125,15 @@ public class PatriciaTrie implements IDiccionarioStruct{
 
     }
 
+    @Override
+    public int getSize() {
+        return 16 + 8 + root.getSize();
+    }
 
     //Metodos auxiliares
 
     //Busca la mejor hoja
+
 
     public static PTLeaf firstLeaf(INode node, String word) {
         if(node.isLeaf()) {
@@ -144,6 +150,7 @@ public class PatriciaTrie implements IDiccionarioStruct{
             return bestLeaf;
         }
     }
+
 
 
 

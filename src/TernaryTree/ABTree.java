@@ -53,6 +53,12 @@ public class ABTree implements IDiccionarioStruct{
 
     }
 
+    @Override
+    public int getSize() {
+        return 16 + 8 + root.getSize();
+        //16 base + 8 ref raiz + tamaño arbol
+    }
+
     public static void Rinsert(IABTNode node, String subString, int index, String word, int value) {
         if(index == subString.length() - 1 && node.getChar() == subString.charAt(index)) {
             node.setKey(word, value);

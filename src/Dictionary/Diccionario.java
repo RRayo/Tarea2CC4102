@@ -17,4 +17,9 @@ public class Diccionario{
     public void add(int i) {
         this.valor.add(i);
     }
+
+    public int getSize(){
+        return 16 + 2*this.key.length() + 4*this.valor.size();
+        //16 base + 2 bytes por caracter + 4 bytes por int
+    }
 }

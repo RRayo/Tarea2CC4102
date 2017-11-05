@@ -85,8 +85,9 @@ public class Experimentos {
 
     }
 
-    public void searchTesting (IDiccionarioStruct d, ArrayList<String> palabras, String tipo, int n) {
+    public int[] searchTesting (IDiccionarioStruct d, ArrayList<String> palabras, String tipo, int n) {
         Stack st = this.randomNumbersStack(0, n, n/10);
+
 
         String[] tiemposPorLargo = new String[50]; //arreglo con la contabilidad de tiempo en base al largo
 
@@ -99,7 +100,20 @@ public class Experimentos {
             tiemposPorLargo[palabras.get(p).length()] += i + "_" +f + "$";
         }
 
+        int[] tiemposPromedios = new int[50];
+        for (int i = 0; i<=50 ; i++) {
+            String[] auxSplit1 = tiemposPorLargo[i].split("$");
+            int total = 0;
+            int size = 0;
+            for(String timeLapse : auxSplit1) {
+                String[] auxSplit2 = timeLapse.split("_");
+                total += Integer.parseInt(auxSplit2[1]) - Integer.parseInt(auxSplit2[0]);
+                size++;
+            }
+            tiemposPromedios[i] = total/size;
+        }
 
+        return tiemposPromedios;
         //System.out.println("Tiempo total de busqueda para " + tipo + "con " + n/10 + " elementos" + ":\t" + (f-i) );
     }
 

@@ -41,6 +41,8 @@ class ABTreeTest {
         assertEquals('b', ABTree.root.getChar(),"The root should have character 'b'");
 
         testTree = new ABTree(testRoot);
+        System.out.println(testTree.getSize());
+
         testTree.insertar("is", 1);
 
         //ABTree.root.printTree();
@@ -91,7 +93,11 @@ class ABTreeTest {
         testTree.insertar("ii", 15);
         assertEquals(testTree.buscar("ii").get(0).intValue(), 15,"The search should've return 15, as 'ii' is in the trie");
 
-        ABTree.root.printTree();
+        //ABTree.root.printTree();
+
+        System.out.println(testTree.getSize());
+
+
     }
 
 }

@@ -52,6 +52,17 @@ public class LinearProbing implements IDiccionarioStruct {
         this.elementos++;
     }
 
+    @Override
+    public int getSize() {
+        int dictionarySize = 16; //arreglo
+        for(Diccionario dict : this.tabla) {
+            if(dict != null){ dictionarySize +=  8 + dict.getSize(); }
+            //referencia diccionaro + su peso
+        }
+        return 16 + 4 + 4 + dictionarySize;
+        //base + 4 int + 4 elementos + tamaño tabla
+    }
+
     public static int hash(String s) {
         int hash = 7;
         for(int i = 0; i<s.length(); i++) {
