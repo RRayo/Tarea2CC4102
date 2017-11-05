@@ -95,13 +95,13 @@ public class LinearProbing implements IDiccionarioStruct {
 
         */
 
-        for(int i = 0; i<4; i++){
-            String prefix = i<=4 ? "0" : "";
-            System.out.println("x" + prefix +i + ": " + TextTools.count("/524288/x"+ prefix + i + ".txt"));
+        for(int i = 0; i<10; i++){
+            String prefix = i<=9 ? "0" : "";
+            System.out.println("x" + prefix +i + ": " + TextTools.count("/lyrics/x"+ prefix + i + ".txt"));
         }
 
-        System.out.println("Lyrics1: " + TextTools.count("lyrics1.txt"));
-        System.out.println("Lyrics2: " + TextTools.count("lyrics2.txt"));
+        //System.out.println("Lyrics1: " + TextTools.count("lyrics1.txt"));
+        //System.out.println("Lyrics2: " + TextTools.count("lyrics2.txt"));
 
         //System.out.println("Bible: " + TextTools.count("524288/big.txt"));
 

@@ -8,35 +8,65 @@ import TernaryTree.ABTNullNode;
 import TernaryTree.ABTree;
 import TextTools.TextTools;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Stack;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Experimentos {
 
     public Experimentos (String archivo, int factor) { //factor para elegir el k en base al n
-        ArrayList<String> palabras = TextTools.leerArchivo(archivo);
-
-        int n = palabras.size();
-        int k = n*factor;
-
-        LinearProbing hashLinearProbing = new LinearProbing(k);
-        IDiccionarioStruct abTree = new ABTree(new ABTNullNode());
-        IDiccionarioStruct patriciaTree = new PatriciaTrie(new PTNode());
-
-        this.timeTesting(hashLinearProbing, palabras, "LinearProbing");
-        this.timeTesting(abTree, palabras, "ABTree");
-        this.timeTesting(patriciaTree, palabras, "PatriciaTree");
-
-        double elementosHash = hashLinearProbing.elementos;
-        double porcentajeLlenado = elementosHash/n; //TODO revisar si sirve
-        System.out.println("Porcentaje de llenado de tabla hash:\t" + porcentajeLlenado);
+        String[] directorios = new String[11];
+        ArrayList<String> lines = new ArrayList<>();
+        lines.add("------ RESULTADOS ------");
+        Path file = Paths.get("results.txt");
 
 
-        this.searchTesting(hashLinearProbing, palabras, "LinearProbing", n);
-        this.searchTesting(abTree, palabras, "ABTree", n);
-        this.searchTesting(patriciaTree, palabras, "PatriciaTree", n);
+        for(int i = 10; i <= 20; i++) {
+            directorios[i-10] = String.valueOf((int)java.lang.Math.pow(2,i));
+
+        }
+
+
+        for(String dir : directorios) {
+
+
+            lines.add("Tamaño: " + dir);
+
+            ArrayList<String> palabras = TextTools.leerArchivo(dir + "/x00.txt");
+
+            int n = palabras.size();
+            int k = n * factor;
+
+            LinearProbing hashLinearProbing = new LinearProbing(k);
+            IDiccionarioStruct abTree = new ABTree();
+            IDiccionarioStruct patriciaTree = new PatriciaTrie();
+
+            lines.add(" ->Tiempo de construccion de linearProbing: " + timeTesting(hashLinearProbing, palabras, "LinearProbing"));
+            lines.add(" ->Tamaño  de linearProbing: " + String.valueOf(hashLinearProbing.getSize()));
+            double elementosHash = hashLinearProbing.elementos;
+            double porcentajeLlenado = elementosHash / n; //TODO revisar si sirve
+            lines.add(" ->Porcentaje de llenado de tabla hash:\t" + porcentajeLlenado);
+
+            lines.add(" ->Tiempo de construccion de abTree: " + timeTesting(abTree, palabras, "ABTree"));
+            lines.add(" ->Tamaño  de abTree: " + String.valueOf(abTree.getSize()));
+
+            lines.add(" ->Tiempo de construccion de patriciaTree: " + timeTesting(patriciaTree, palabras, "LinearProbing"));
+            lines.add(" ->Tamaño  de patriciaTree: " + String.valueOf(patriciaTree.getSize()));
+        }
+        try {
+            Files.write(file, lines, Charset.forName("UTF-8"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //TODO agregar estos experimentos
+        //this.searchTesting(hashLinearProbing, palabras, "LinearProbing", n);
+        //this.searchTesting(abTree, palabras, "ABTree", n);
+        //this.searchTesting(patriciaTree, palabras, "PatriciaTree", n);
 
     }
 
@@ -58,7 +88,7 @@ public class Experimentos {
     }
 
 
-    public void timeTesting (IDiccionarioStruct d, ArrayList<String> palabras, String tipo) {
+    static public String timeTesting (IDiccionarioStruct d, ArrayList<String> palabras, String tipo) {
         String letraFinal = "";
         if (tipo.equals("ABTree")) {
             letraFinal = "$";
@@ -67,7 +97,7 @@ public class Experimentos {
         TextTools.llenarDiccionarioStatic(d, palabras, letraFinal);
         long f = System.currentTimeMillis();
 
-        System.out.println("Tiempo total de insercion para " + tipo + ":\t" + (f-i));
+       return "Tiempo total de insercion para " + tipo + ":\t" + (f-i);
     }
 
     public void timeTesting (IDiccionarioStruct d, ArrayList<String> palabras1,
@@ -124,5 +154,54 @@ public class Experimentos {
             st.push(randomNum);
         }
         return st;
+    }
+
+    public static void main(String[] args) {
+        /*int factor = 3;
+
+        String[] directorios = new String[11];
+        ArrayList<String> lines = new ArrayList<>();
+        lines.add("------ RESULTADOS ------");
+        Path file = Paths.get("results.txt");
+
+
+        for(int i = 10; i <= 20; i++) {
+            directorios[i-10] = String.valueOf((int)java.lang.Math.pow(2,i));
+
+        }
+
+
+        for(String dir : directorios) {
+
+
+            lines.add("Tamaño: " + dir);
+
+            ArrayList<String> palabras = TextTools.leerArchivo(dir + "/x00.txt");
+
+            int n = palabras.size();
+            int k = n * factor;
+
+            LinearProbing hashLinearProbing = new LinearProbing(k);
+            IDiccionarioStruct abTree = new ABTree();
+            IDiccionarioStruct patriciaTree = new PatriciaTrie();
+
+            lines.add(" ->Tiempo de construccion de linearProbing: " + timeTesting(hashLinearProbing, palabras, "LinearProbing"));
+            lines.add(" ->Tamaño  de linearProbing: " + String.valueOf(hashLinearProbing.getSize()));
+            double elementosHash = hashLinearProbing.elementos;
+            double porcentajeLlenado = elementosHash / n; //TODO revisar si sirve
+            lines.add(" ->Porcentaje de llenado de tabla hash:\t" + porcentajeLlenado);
+
+            lines.add(" ->Tiempo de construccion de abTree: " + timeTesting(abTree, palabras, "ABTree"));
+            lines.add(" ->Tamaño  de abTree: " + String.valueOf(abTree.getSize()));
+
+            lines.add(" ->Tiempo de construccion de patriciaTree: " + timeTesting(patriciaTree, palabras, "LinearProbing"));
+            lines.add(" ->Tamaño  de patriciaTree: " + String.valueOf(patriciaTree.getSize()));
+        }
+        try {
+            Files.write(file, lines, Charset.forName("UTF-8"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
     }
 }

@@ -40,6 +40,7 @@ public class ABTree implements IDiccionarioStruct{
 
     @Override
     public void insertar(String s, int posc) {
+        System.out.println(s);
         if(root.isNull()) {
             root = new ABTNode(s.charAt(0));
         }
