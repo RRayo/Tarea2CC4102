@@ -109,10 +109,11 @@ public class TextTools {
 			d.insertar(p+s, i++);
 		}
 	}
-	
-	
-	
-	
+
+	public static int count(String archivo) {
+		return leerArchivo(archivo).size();
+
+	}
 	
 	public static void llenarDiccionarioStatic(IDiccionarioStruct d, ArrayList<String> palabras, String s) { //String s $ para arboles, "" para hash
 		int i = 0;
@@ -120,43 +121,6 @@ public class TextTools {
 			d.insertar(p+s, i++);
 		}
 	}
-	
-	
-	public static double similitud(ArrayList<String> palabrasT1, ArrayList<String> palabrasT2
-			, IDiccionarioStruct D, String s, String tipo) {
-
-		double sum = 0;
-
-
-		long i = System.currentTimeMillis();
-		for (String p : palabrasT1) {
-			sum += Math.abs(count(p, D)- count(p, D)); //TODO se puede optimizar solo sumando el largo de palabrasT1 en este caso y solo buscar en D2
-		}
-		
-		for (String p : palabrasT2) {
-			sum += Math.abs(count(p, D)- count(p, D));
-		}
-		long f = System.currentTimeMillis();
-
-		System.out.println("Tiempo total de insercion para " + tipo + ":\t" + (f-i));
-
-		return 1 - (sum / (palabrasT1.size()+palabrasT2.size()));
-	}
-	
-	
-	public static int count(String palabra, IDiccionarioStruct D) {
-		return D.buscar(palabra).size();
-	}
-	
-	
-	//TODO ver si es necesaria
-	public static int count(String archivo) {
-		return leerArchivo(archivo).size();
-		
-	}
-	//<:()
-	
-	
 	
 	
 }
