@@ -41,7 +41,7 @@ public abstract class AbstractExperimento {
     public String timeTesting (IDiccionarioStruct d, ArrayList<String> palabras1,
                              ArrayList<String> palabras2 , String tipo) {
         String letraFinal = "";
-        if (tipo.equals("ABTree")) {
+        if (tipo.equals("ABTree") || tipo.equals("PTrie")) {
             letraFinal = "$";
         }
         long i = System.nanoTime();
