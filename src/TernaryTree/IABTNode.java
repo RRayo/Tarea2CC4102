@@ -10,7 +10,7 @@ public interface IABTNode {
     ArrayList<Integer> getValue();
     void setKey (String key, int value);
     IABTNode getSon (int i);
-    IABTNode updateNode(String word, int index);
+    IABTNode updateNode(String substring, String word, int index);
     void printTree();
     void addValue(int v);
     int getSize();

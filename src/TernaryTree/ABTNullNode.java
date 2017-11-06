@@ -40,7 +40,7 @@ public class ABTNullNode implements IABTNode{
     }
 
     @Override
-    public IABTNode updateNode(String word, int index) {
+    public IABTNode updateNode(String substring, String word, int index) {
         return null;
     }
 

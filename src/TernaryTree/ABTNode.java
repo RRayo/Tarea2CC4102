@@ -9,6 +9,7 @@ public class ABTNode implements IABTNode{
 
     private char s = '\u0000';
 
+
     ArrayList<IABTNode> sons = new ArrayList<IABTNode>() {{
         add(new ABTNullNode());
         add(new ABTNullNode());
@@ -43,14 +44,15 @@ public class ABTNode implements IABTNode{
         return this.sons.get(i);
     }
 
-    public IABTNode updateNode(String word, int index) {
-        int descendNode = this.descend(word.charAt(index));
+    public IABTNode updateNode(String substring, String word,  int index) {
+        int descendNode = this.descend(substring.charAt(index));
         IABTNode newNode;
         if(descendNode == 1){
-            newNode = new ABTNode(word.charAt(index+1));
+            newNode = new ABTNode(substring.charAt(index+1));
         } else {
-            newNode = new ABTNode(word.charAt(index));
+            newNode = new ABTNode(substring.charAt(index));
         }
+        newNode.setKey(word, -1);
         this.sons.set(descendNode, newNode);
         return this.sons.get(descendNode);
     }
@@ -60,8 +62,10 @@ public class ABTNode implements IABTNode{
         System.out.println("node with char: " + this.getChar() + " and key: " + this.getKey());
         int i = 0;
         for(IABTNode node : this.sons) {
-            System.out.print("Son " + i + " :");
-            node.printTree();
+            if(!node.isNull()) {
+                System.out.print("Son " + i + " :");
+                node.printTree();
+            }
             i++;
         }
     }

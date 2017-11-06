@@ -117,8 +117,17 @@ public class TextTools {
 	
 	public static void llenarDiccionarioStatic(IDiccionarioStruct d, ArrayList<String> palabras, String s) { //String s $ para arboles, "" para hash
 		int i = 0;
-		for( String p : palabras) {
-			d.insertar(p+s, i++);
+		int[] sizes = new int[]{1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288, 1048576};
+		int index= 0;
+		for (String p : palabras) {
+			d.insertar(p + s, i++);
+			/*for (int j = index; j <= 10; j++) {
+				if (i == sizes[j]) {
+					System.out.println("Numero de palabras: " + i);
+					index++;
+					break;
+				}
+			}*/
 		}
 	}
 	
