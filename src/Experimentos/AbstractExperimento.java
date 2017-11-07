@@ -41,7 +41,7 @@ public abstract class AbstractExperimento {
             letraFinal = "";
         }
         long i = System.nanoTime();
-        TextTools.llenarDiccionarioStatic(d, palabras, letraFinal);
+        TextTools.llenarDiccionario(d, palabras, letraFinal);
         long f = System.nanoTime();
 
         System.err.println("Test finalizado");
@@ -64,8 +64,8 @@ public abstract class AbstractExperimento {
             letraFinal = "";
         }
         long i = System.nanoTime();
-        TextTools.llenarDiccionarioStatic(d, palabras1, letraFinal);
-        TextTools.llenarDiccionarioStatic(d, palabras2, letraFinal);
+        TextTools.llenarDiccionario(d, palabras1, letraFinal);
+        TextTools.llenarDiccionario(d, palabras2, letraFinal);
         long f = System.nanoTime();
 
         System.err.println("Test finalizado");

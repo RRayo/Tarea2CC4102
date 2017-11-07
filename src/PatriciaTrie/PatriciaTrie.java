@@ -171,7 +171,6 @@ public class PatriciaTrie implements IDiccionarioStruct{
 
 
 
-    @Override
     public int getSize() {
         return 16 + 8 + root.getSize();
     }

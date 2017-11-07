@@ -14,8 +14,19 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+/**
+ * Clase para el experimento de similitud entre 2 textos.
+ */
 public class ExperimentoSimilitud extends AbstractExperimento{
 
+    /**
+     * Constructor para el experimento de similitud.
+     * @param fileName Nombre del archivo a generar con los resultados.
+     * @param factor Factor por el que se multiplicará la cantidad de palabras para asegurar
+     *               el 40% máximo de llenado de hash. (Recomendado 2.5)
+     * @param ini Inicio del rango de archivos (minimo 10).
+     * @param fin Fin del rango de archivos (máximo 20).
+     */
     public ExperimentoSimilitud (String fileName, double factor, int ini, int fin) {
 
         String[] directorios = new String[11];
@@ -69,10 +80,10 @@ public class ExperimentoSimilitud extends AbstractExperimento{
             lines.add(" ->Tiempo de construccion de abTree para T2: " + super.timeTesting(abTree2, palabras2, "ABTree"));
             lines.add(" ->Tamaño  de abTree2: " + String.valueOf(abTree2.getSize()));
 
-            lines.add(" ->Tiempo de construccion de patriciaTree para T1: " + super.timeTesting(patriciaTree1, palabras1, "LinearProbing"));
+            lines.add(" ->Tiempo de construccion de patriciaTree para T1: " + super.timeTesting(patriciaTree1, palabras1, "PatriciaTree"));
             lines.add(" ->Tamaño  de patriciaTree1: " + String.valueOf(patriciaTree1.getSize()));
 
-            lines.add(" ->Tiempo de construccion de patriciaTree para T2: " + super.timeTesting(patriciaTree2, palabras2, "LinearProbing"));
+            lines.add(" ->Tiempo de construccion de patriciaTree para T2: " + super.timeTesting(patriciaTree2, palabras2, "PatriciaTree"));
             lines.add(" ->Tamaño  de patriciaTree2: " + String.valueOf(patriciaTree2.getSize()));
 
 
@@ -98,7 +109,7 @@ public class ExperimentoSimilitud extends AbstractExperimento{
     }
     
     public static void main (String [ ] args) {
-        ExperimentoSimilitud e = new ExperimentoSimilitud("exS-1024",2.5, 10,10);
+        ExperimentoSimilitud e = new ExperimentoSimilitud("exS-1024",2.5, 12,12);
     	
     }
 }
