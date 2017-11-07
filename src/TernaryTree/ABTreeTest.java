@@ -129,12 +129,12 @@ class ABTreeTest {
         testTree.insertar("first$", 32);
         testTree.insertar("kiss$", 33);
 
-        ABTree.root.printTree();
+        testTree.root.printTree();
 
         testTree.insertar("she$", 34);
 
 
-        ABTree.root.printTree();
+        testTree.root.printTree();
 
         System.out.println(testTree.getSize());
 

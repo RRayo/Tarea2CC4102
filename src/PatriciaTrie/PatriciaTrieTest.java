@@ -66,7 +66,7 @@ class PatriciaTrieTest {
 
         System.out.println(ptTest.getSize());
 
-        /*ptTest.insertar("romane$",1);
+        ptTest.insertar("romane$",1);
         assertEquals(1,ptTest.buscar("romane$").get(0).intValue(), "Should've return 1, as romane is in the tree");
 
         ptTest.insertar("romanus$",2);
@@ -116,9 +116,13 @@ class PatriciaTrieTest {
 
         ptTest.insertar("hilter$",13);
         assertEquals(13,ptTest.buscar("hilter$").get(1).intValue(), "Should've return 13, as hilter is twice  in the tree");
-*/
 
+
+
+
+        ptTest = new PatriciaTrie();
         ptTest.insertar("written$",1);
+        assertEquals(1,ptTest.buscar("written$").get(0).intValue(), "Should've return 1, as written is twice in the tree");
         ptTest.insertar("by$",2);
         ptTest.insertar("william",3);
         ptTest.insertar("steig",4);
@@ -133,9 +137,9 @@ class PatriciaTrieTest {
 
 
 
-        ptTest.root.printTree();
+        //ptTest.root.printTree();
 
-        System.out.println(ptTest.getSize());
+        //System.out.println(ptTest.getSize());
     }
 
 }
