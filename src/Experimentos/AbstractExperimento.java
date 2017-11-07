@@ -81,7 +81,10 @@ public abstract class AbstractExperimento {
      */
     public String searchTesting (IDiccionarioStruct d, ArrayList<String> palabras, String tipo) {
         System.err.println("Inicio de test de búsqueda de palabras al azar para: " + tipo);
-
+        String letraFinal = "$";
+        if (tipo.equals("LinearProbing")) {
+            letraFinal = "";
+        }
         int n = palabras.size();
         Stack st = this.randomNumbersStack(0, n-1, n/10);
 
@@ -91,7 +94,7 @@ public abstract class AbstractExperimento {
         while (!st.empty()) {
             int p = (Integer) st.pop();
             long i = System.nanoTime();
-            d.buscar(palabras.get(p));
+            d.buscar(palabras.get(p)+letraFinal);
             long f = System.nanoTime();
             tiemposPorLargo[palabras.get(p).length()] += i + "_" +f + "$";
         }
@@ -145,15 +148,20 @@ public abstract class AbstractExperimento {
 
         System.err.println("Inicio de test de similitud entre 2 archivos para: " + tipo);
 
+        String letraFinal = "$";
+        if (tipo.equals("LinearProbing")) {
+            letraFinal = "";
+        }
+
         double total = 0;
 
         long i = System.nanoTime();
         for (String p : palabrasT1) {
-            total += Math.abs(count(p, D1) - count(p, D2));
+            total += Math.abs(count(p + letraFinal, D1) - count(p + letraFinal, D2));
         }
 
         for (String p : palabrasT2) {
-            total += Math.abs(count(p, D1) - count(p, D2));
+            total += Math.abs(count(p + letraFinal, D1) - count(p + letraFinal, D2));
         }
         long f = System.nanoTime();
 
