@@ -69,6 +69,7 @@ public class ExperimentoSimilitud extends AbstractExperimento{
             porcentajeLlenado = elementosHash / n1;
             lines.add(" ->Porcentaje de llenado de tabla hash1:\t" + porcentajeLlenado);
 
+
             lines.add(" ->Tiempo de construccion de linearProbing para T2: " + super.timeTesting(hashLinearProbing2, palabras2, "LinearProbing"));
             lines.add(" ->Tamaño  de linearProbing2: " + String.valueOf(hashLinearProbing2.getSize()));
             elementosHash = hashLinearProbing2.elementos;
@@ -79,6 +80,8 @@ public class ExperimentoSimilitud extends AbstractExperimento{
             lines.add(" ->Tamaño  de abTree1: " + String.valueOf(abTree1.getSize()));
             lines.add(" ->Tiempo de construccion de abTree para T2: " + super.timeTesting(abTree2, palabras2, "ABTree"));
             lines.add(" ->Tamaño  de abTree2: " + String.valueOf(abTree2.getSize()));
+
+
 
             lines.add(" ->Tiempo de construccion de patriciaTree para T1: " + super.timeTesting(patriciaTree1, palabras1, "PatriciaTree"));
             lines.add(" ->Tamaño  de patriciaTree1: " + String.valueOf(patriciaTree1.getSize()));

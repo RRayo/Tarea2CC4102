@@ -8,7 +8,6 @@ import java.util.Stack;
 
 /**
  * Implementacion de la interfaz IDiccionarioStruct
- * PTnode root es su unico campo, un nodo raiz del arbol.
  */
 public class PatriciaTrie implements IDiccionarioStruct{
 
@@ -17,7 +16,7 @@ public class PatriciaTrie implements IDiccionarioStruct{
 
     /**
      * Constructor del PatriciaTrie, recibe como parametro un PTNode para que siva de raiz
-     * @param root
+     * @param root: PTnode root es su unico campo, un nodo raiz del arbol.
      */
     public PatriciaTrie(PTNode root) {
         this.root = root;
@@ -32,17 +31,18 @@ public class PatriciaTrie implements IDiccionarioStruct{
      * @param s String a buscar.
      * @return lista con posiciones del String en el texto original. Si no está devuelve una lista vacía.
      */
+    @Override
     public ArrayList<Integer> buscar(String s){
         INode searchResult = Isearch(this.root, s);
         if(searchResult == null || !searchResult.isLeaf()) {
-            return new ArrayList<Integer>();
+            return new ArrayList<>();
         } else {
             PTLeaf result = (PTLeaf) searchResult;
             if(result.getKey().equals(s)) {
                 return result.getValues();
             }
         }
-        return new ArrayList<Integer>();
+        return new ArrayList<>();
     }
 
 
@@ -52,7 +52,7 @@ public class PatriciaTrie implements IDiccionarioStruct{
      * @param word: String con la palabra a buscar.
      * @return un INode que representa a el ultimo nodo al cual se pudo descender.
      */
-    static INode Isearch(INode node, String word) {
+    private static INode Isearch(INode node, String word) {
         int index = 0;
         //Si se llega a una hoja se hace una comparacion directa
         while(!(node.isLeaf())){
@@ -104,7 +104,8 @@ public class PatriciaTrie implements IDiccionarioStruct{
 
     /**
      * insertFromLeaf: Metodo iterativo de reinsercion desde una hoja, entrando por la raiz y descendiendo segun p
-     * @param p : String que representa el prefijo maximo en comun entre la palabra a insertar y la hoja a la cual se llego.
+     * @param node: INode del nodo al cual se ingresa inicialmente para realizar la insercion
+     * @param p: String que representa el prefijo maximo en comun entre la palabra a insertar y la hoja a la cual se llego.
      * @param word: String de la palabra a insertar
      * @param value: Int con el valor asociado a la ll.ave.
      */
@@ -182,19 +183,23 @@ public class PatriciaTrie implements IDiccionarioStruct{
 
 
     /**
-     * getSize:
-     * @return
+     * getSize: Implementacion del getSize insertar de la interfaz IDiccionarioStruct, llama recursivamente la funcion
+     * getSize en el nodo raiz
+     * @return un int que llama
      */
     public int getSize() {
         return 16 + 8 + root.getSize();
     }
 
-    //Metodos auxiliares
 
-
-
-    //Busca la mejor hoja
-    public static PTLeaf firstLeaf(INode node, String word) {
+    /**
+     * firstLeaf: Metodo utilizado por Iinsert para encontrar la mejor hoja para una palabra dada. El criterio de mejor
+     * hoja es decidido por la hoja que posee una llave con un prefico en comun de mayor largo.
+     * @param node: Nodo del cual se comienza la busqueda de la hoja.
+     * @param word: Palabra a la cual se le busca la mejor hoja.
+     * @return la mejor hoja con respecto a la palabra.
+     */
+    private static PTLeaf firstLeaf(INode node, String word) {
         Stack<INode> stack = new Stack<>();
         int bestLength = 0;
         PTLeaf bestLeaf = null;
@@ -220,36 +225,14 @@ public class PatriciaTrie implements IDiccionarioStruct{
         return bestLeaf;
     }
 
-/*
-    //busca la primera hoja
-    public static PTLeaf firstLeaf(INode node) {
-        Stack<INode> stack = new Stack<>();
-        PTLeaf bestLeaf = null;
-        if (node.isLeaf()) {
-            return (PTLeaf) node;
-        }
-        stack.push(node);
-        while (!stack.empty()) {
-            node = stack.pop();
-            for (PTEdge edge : node.getSons()) {
-                if (edge.node.isLeaf()) {
-                    PTLeaf candidateLeaf = (PTLeaf) edge.node;
-                    bestLeaf = candidateLeaf;
-                    return bestLeaf;
-                } else {
-                    stack.push(edge.node);
-                }
-            }
-        }
-        return bestLeaf;
-    }
 
-*/
-
-
-
-
-    public static String LCP (String s1, String s2) {
+    /**
+     * LCP: Calcula el maximo prefijo en comun entre dos strings.
+     * @param s1: Primer string.
+     * @param s2: Segundo String.
+     * @return String con el maximo prefijo comun obtenido.
+     */
+    static String LCP(String s1, String s2) {
         int minLength = Math.min(s1.length(), s2.length());
         for (int i = 0; i < minLength; i++) {
             if (s1.charAt(i) != s2.charAt(i)) {
@@ -259,7 +242,14 @@ public class PatriciaTrie implements IDiccionarioStruct{
         return s1.substring(0, minLength);
     }
 
-    public static String CLCP (String s1, String s2) {
+    /**
+     *CLCP: Calcula el complemento del maximo prefijo en comun entre dos strings. Esto lo hace calculando LCP y
+     * retornando el substring del String de entrada mas largo.
+     * @param s1: Primer string.
+     * @param s2: Segundo String.
+     * @return El complemento de LCP
+     */
+    private static String CLCP(String s1, String s2) {
         int minLength = Math.min(s1.length(), s2.length());
         for (int i = 0; i < minLength; i++) {
             if (s1.charAt(i) != s2.charAt(i)) {

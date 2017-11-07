@@ -70,8 +70,12 @@ public class TextTools {
 	public static void llenarDiccionario(IDiccionarioStruct d, ArrayList<String> palabras, String s) { //String s $ para arboles, "" para hash
 		int i = 0;
 		for (String p : palabras) {
+			if(p.equals("yabadaba")){
+				System.out.println("Meh");
+			}
 			d.insertar(p + s, i++);
 		}
+		System.out.println(i);
 	}
 
 

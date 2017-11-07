@@ -147,20 +147,28 @@ public abstract class AbstractExperimento {
 
         double total = 0;
 
+        double sum = 0;
+
         long i = System.nanoTime();
         for (String p : palabrasT1) {
-            total += Math.abs(count(p, D1) - count(p, D2));
+            int c1 = count(p, D1);
+            int c2 = count(p, D2);
+            sum += c1 + c2;
+            total += Math.abs(c1 - c2);
         }
 
         for (String p : palabrasT2) {
-            total += Math.abs(count(p, D1) - count(p, D2));
+            int c1 = count(p, D1);
+            int c2 = count(p, D2);
+            sum += c1 + c2;
+            total += Math.abs(c1 - c2);
         }
         long f = System.nanoTime();
 
         System.err.println("Test finalizado");
 
         //tiempo & resultados
-        return (f-i) + "&" + (1 - (total / (palabrasT1.size()+palabrasT2.size())));
+        return (f-i) + "&" + (1 - (total / sum));
     }
 
 
@@ -171,7 +179,14 @@ public abstract class AbstractExperimento {
      * @return Retorna la cantidad de veces que aparece la palabra en el texto original.
      */
     public int count(String palabra, IDiccionarioStruct D) {
-        return D.buscar(palabra).size();
+        int aux = D.buscar(palabra + "$").size();
+
+        if(palabra.equals("yabadaba")){
+            System.out.println(aux);
+            System.out.println(D.getSize());
+        }
+
+        return aux;
     }
 
     public static void main(String[] args) {
