@@ -5,11 +5,20 @@ import Dictionary.IDiccionarioStruct;
 import java.util.ArrayList;
 import java.util.Stack;
 
+
+/**
+ * Implementacion de la interfaz IDiccionarioStruct
+ * PTnode root es su unico campo, un nodo raiz del arbol.
+ */
 public class PatriciaTrie implements IDiccionarioStruct{
 
-    public static PTNode root = new PTNode();
+    public PTNode root = new PTNode();
 
 
+    /**
+     * Constructor del PatriciaTrie, recibe como parametro un PTNode para que siva de raiz
+     * @param root
+     */
     public PatriciaTrie(PTNode root) {
         this.root = root;
     }
@@ -17,9 +26,14 @@ public class PatriciaTrie implements IDiccionarioStruct{
     public PatriciaTrie() { }
 
 
-    @Override
+    /**
+     * buscar: Implementacion del metodo buscar de la interfa IDiccionarioStruct
+     * Busca un String dentro de la estructura y devuelve lista con posiciones.
+     * @param s String a buscar.
+     * @return lista con posiciones del String en el texto original. Si no está devuelve una lista vacía.
+     */
     public ArrayList<Integer> buscar(String s){
-        INode searchResult = Isearch(this.root, s, 0);
+        INode searchResult = Isearch(this.root, s);
         if(searchResult == null || !searchResult.isLeaf()) {
             return new ArrayList<Integer>();
         } else {
@@ -32,8 +46,14 @@ public class PatriciaTrie implements IDiccionarioStruct{
     }
 
 
-
-    static INode Isearch(INode node, String word, int index) {
+    /**
+     * ISearch : Funcion que realiza una busqueda iterativa sobre el trie
+     * @param node: INode sobre el cual se parte la busqueda.
+     * @param word: String con la palabra a buscar.
+     * @return un INode que representa a el ultimo nodo al cual se pudo descender.
+     */
+    static INode Isearch(INode node, String word) {
+        int index = 0;
         //Si se llega a una hoja se hace una comparacion directa
         while(!(node.isLeaf())){
             PTEdge descendEdge = node.descend(word, index);
@@ -48,16 +68,22 @@ public class PatriciaTrie implements IDiccionarioStruct{
     }
 
 
+    /**
+     * insertar : Implementacion del metodo insertar de la interfa IDiccionarioStruct, realiza una llamada a
+     * insertFromLeaf en caso de una busqueda infructuosa
+     * @param s    String por insertar.
+     * @param posc posición en el texto del String.
+     */
     @Override
     public void insertar(String s, int posc) {
         //Se realiza la busqueda y se ve hasta donde llego
         //s = s + "$";
-        if (this.root.descendRoot(s,0) == null){
+        if (root.descendRoot(s,0) == null){
             PTLeaf leafNode = new PTLeaf(s, posc);
             PTEdge leafEdge = new PTEdge(s , leafNode);
-            this.root.addSon(leafEdge);
+            root.addSon(leafEdge);
         } else {
-            INode searchResult = Isearch(this.root, s, 0);
+            INode searchResult = Isearch(root, s);
             PTLeaf leaf;
             if (searchResult.isLeaf()) {
                 leaf = (PTLeaf) searchResult;
@@ -71,14 +97,20 @@ public class PatriciaTrie implements IDiccionarioStruct{
                 leaf = firstLeaf(searchResult, s);
             }
             //va a descender desde la raiz hasta llegar a su ubicacion final
-            insertFromLeaf(this.root, LCP(leaf.getKey(), s), s, posc, 0);
+            insertFromLeaf(this.root, LCP(leaf.getKey(), s), s, posc);
         }
     }
 
 
-
-    static void insertFromLeaf(INode node, String p, String word, int value, int index) {
+    /**
+     * insertFromLeaf: Metodo iterativo de reinsercion desde una hoja, entrando por la raiz y descendiendo segun p
+     * @param p : String que representa el prefijo maximo en comun entre la palabra a insertar y la hoja a la cual se llego.
+     * @param word: String de la palabra a insertar
+     * @param value: Int con el valor asociado a la ll.ave.
+     */
+    private static void insertFromLeaf(INode node, String p, String word, int value) {
         //veo si puedo descender
+        int index = 0;
         PTEdge descendEdge = node.descend(word, index);
         String comparateWord = p.substring(index, p.length());
 
@@ -149,8 +181,10 @@ public class PatriciaTrie implements IDiccionarioStruct{
     }
 
 
-
-
+    /**
+     * getSize:
+     * @return
+     */
     public int getSize() {
         return 16 + 8 + root.getSize();
     }
