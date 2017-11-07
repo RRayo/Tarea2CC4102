@@ -93,6 +93,9 @@ public abstract class AbstractExperimento {
 
         while (!st.empty()) {
             int p = (Integer) st.pop();
+            if (palabras.get(p).length() >= 50) {
+                continue;
+            }
             long i = System.nanoTime();
             d.buscar(palabras.get(p)+letraFinal);
             long f = System.nanoTime();
@@ -171,8 +174,7 @@ public abstract class AbstractExperimento {
             sum += c1 + c2;
         }
         long f = System.nanoTime();
-        System.out.println(total);
-        System.out.println((palabrasT1.size()+palabrasT2.size()));
+
         System.err.println("Test finalizado");
 
         //tiempo & resultados

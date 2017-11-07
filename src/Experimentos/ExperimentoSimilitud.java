@@ -109,7 +109,7 @@ public class ExperimentoSimilitud extends AbstractExperimento{
     }
     
     public static void main (String [ ] args) {
-        ExperimentoSimilitud e = new ExperimentoSimilitud("exS-1024",2.5, 12,12);
+        ExperimentoSimilitud e = new ExperimentoSimilitud("exS-1024",2.5, 10,11);
     	
     }
 }
