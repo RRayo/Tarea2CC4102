@@ -1,32 +1,41 @@
 package Experimentos;
 
 import Dictionary.IDiccionarioStruct;
-import LinearProbing.LinearProbing;
-import PatriciaTrie.PatriciaTrie;
-import PatriciaTrie.PTNode;
-import TernaryTree.ABTNullNode;
-import TernaryTree.ABTree;
 import TextTools.TextTools;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Clase abstracta para implemetar los experimentos.
+ */
 public abstract class AbstractExperimento {
 
+    /**
+     * Clase para que las hijas puedan llamar a los métodos de laclase abstracta.
+     */
     public AbstractExperimento () {
         System.err.println("Comienza experimento");
     }
 
+    /**
+     * Constructor genérico para extender la clase a las hijas.
+     * @param fileName Nombre del archivo.
+     * @param factor Factor por el cual es multiplicado el numero de palabras para inicializar el hash.
+     */
     public AbstractExperimento (String fileName, int factor) {
         System.err.println("Comienza experimento para archivo: " + fileName + "con factor: " + factor);
     }
 
+    /**
+     * Test para medir tiempo de inserción desde las palabras de 1 archivo en un IDiccionarioStruct.
+     * @param d Diccionario que se llenará.
+     * @param palabras Lista de palabras que se insertarán en el diccionario.
+     * @param tipo Tipo de diccionario que se usará.
+     * @return Retorna tiempo de ejecución en nanosegundos en forma de String.
+     */
     public String timeTesting (IDiccionarioStruct d, ArrayList<String> palabras, String tipo) {
+        System.err.println("Inicio de test de tiempo de inserción (1 archivo) para: " + tipo);
         String letraFinal = "";
         if (tipo.equals("ABTree")) {
             letraFinal = "$";
@@ -35,11 +44,21 @@ public abstract class AbstractExperimento {
         TextTools.llenarDiccionarioStatic(d, palabras, letraFinal);
         long f = System.nanoTime();
 
-       return ""+(f-i);
+        System.err.println("Test finalizado");
+        return ""+(f-i);
     }
 
+    /**
+     * Test para medir tiempo de inserción desde las palabras de 2 archivos en un IDiccionarioStruct.
+     * @param d Diccionario que se llenará.
+     * @param palabras1 Lista de palabras del 1er archivo que se insertarán en el diccionario.
+     * @param palabras2 Lista de palabras del 2do archivo que se insertarán en el diccionario.
+     * @param tipo Tipo de diccionario que se usará.
+     * @return Retorna tiempo de ejecución en nanosegundos en forma de String.
+     */
     public String timeTesting (IDiccionarioStruct d, ArrayList<String> palabras1,
                              ArrayList<String> palabras2 , String tipo) {
+        System.err.println("Inicio de test de tiempo de inserción (2 archivos) para: " + tipo);
         String letraFinal = "";
         if (tipo.equals("ABTree") || tipo.equals("PTrie")) {
             letraFinal = "$";
@@ -49,17 +68,24 @@ public abstract class AbstractExperimento {
         TextTools.llenarDiccionarioStatic(d, palabras2, letraFinal);
         long f = System.nanoTime();
 
+        System.err.println("Test finalizado");
         return "" + (f-i);
-
     }
 
-    public String searchTesting (IDiccionarioStruct d, ArrayList<String> palabras, int n) {
+    /**
+     * Test para la búsqueda de n/10 palabras seleccionadas al azar desde una lista.
+     * @param d Diccionario donde se buscará.
+     * @param palabras Lista de palabras de las que se extraerán palabras para buscar en el diccionario.
+     * @param n
+     * @param tipo
+     * @return
+     */
+    public String searchTesting (IDiccionarioStruct d, ArrayList<String> palabras, int n, String tipo) {
+        System.err.println("Inicio de test de búsqueda de palabras al azar para: " + tipo);
         Stack st = this.randomNumbersStack(0, n-1, n/10);
-
 
         String[] tiemposPorLargo = new String[50]; //arreglo con la contabilidad de tiempo en base al largo
         Arrays.fill(tiemposPorLargo, "");
-
 
         while (!st.empty()) {
             int p = (Integer) st.pop();
@@ -92,6 +118,7 @@ public abstract class AbstractExperimento {
             //tiemposPromedios[i] = total/size;
         }
 
+        System.err.println("Test finalizado");
         return formatoVertical;
         //System.out.println("Tiempo total de busqueda para " + tipo + "con " + n/10 + " elementos" + ":\t" + (f-i) );
     }

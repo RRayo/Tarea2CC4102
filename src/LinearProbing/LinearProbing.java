@@ -19,7 +19,7 @@ public class LinearProbing implements IDiccionarioStruct {
     public ArrayList<Integer> buscar(String s) { //devuelve el arreglo de posiciones (o null de no estar)
         int f = hash(s);
         int i = f % this.k;
-        ArrayList<Integer> lista = null;
+        ArrayList<Integer> lista = new ArrayList<Integer>();
         while (tabla[i] != null) {
             if (tabla[i].key.equals(s)) {
                 lista = tabla[i].valor;

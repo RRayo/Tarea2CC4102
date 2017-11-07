@@ -51,22 +51,22 @@ public class ExperimentoBusqueda extends AbstractExperimento {
             lines.add(" ->Tiempo de construccion de abTree: " + super.timeTesting(abTree, palabras, "ABTree"));
             lines.add(" ->Tamaño  de abTree: " + String.valueOf(abTree.getSize()));
 
-            lines.add(" ->Tiempo de construccion de patriciaTree: " + super.timeTesting(patriciaTree, palabras, "LinearProbing"));
+            lines.add(" ->Tiempo de construccion de patriciaTree: " + super.timeTesting(patriciaTree, palabras, "PatriciaTree"));
             lines.add(" ->Tamaño  de patriciaTree: " + String.valueOf(patriciaTree.getSize()));
 
 
             lines.add(" ->Tiempo de busqueda de linearProbing: ");
-            String[] search = super.searchTesting(hashLinearProbing, palabras, n).split("\n");
+            String[] search = super.searchTesting(hashLinearProbing, palabras, n, "LinearProbing").split("\n");
             for (String line: search) {
             	lines.add("\t" + line);
             }
             lines.add(" ->Tiempo de busqueda de abTree: ");
-            search = super.searchTesting(abTree, palabras, n).split("\n");
+            search = super.searchTesting(abTree, palabras, n, "ABTree").split("\n");
             for (String line: search) {
             	lines.add("\t" + line);
             }
             lines.add(" ->Tiempo de busqueda de patriciaTree: ");
-            search = super.searchTesting(patriciaTree, palabras, n).split("\n");
+            search = super.searchTesting(patriciaTree, palabras, n, "PatriciaTree").split("\n");
             for (String line: search) {
             	lines.add("\t" + line);
             }
