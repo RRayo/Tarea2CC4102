@@ -13,8 +13,19 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+/**
+ * Clase para el experimento de búsqueda en diccionarios.
+ */
 public class ExperimentoBusqueda extends AbstractExperimento {
 
+    /**
+     * Constructor para el experimento de búsqueda.
+     * @param fileName Nombre del archivo a generar con los resultados.
+     * @param factor Factor por el que se multiplicará la cantidad de palabras para asegurar
+     *               el 40% máximo de llenado de hash. (Recomendado 2.5)
+     * @param ini Inicio del rango de archivos (minimo 10).
+     * @param fin Fin del rango de archivos (máximo 20).
+     */
     public ExperimentoBusqueda (String fileName, double factor, int ini, int fin) { //factor para elegir el k en base al n
         String[] directorios = new String[11];
         ArrayList<String> lines = new ArrayList<>();
