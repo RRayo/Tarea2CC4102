@@ -30,7 +30,7 @@ public class ExperimentoBusqueda extends AbstractExperimento {
         	if(dir == null) {
         		continue;
         	}
-            //System.out.println(dir);
+            System.err.println("Tamaño del archivo: " + dir);
             lines.add("Tamaño: " + dir);
 
             ArrayList<String> palabras = TextTools.leerArchivo(dir + "/x00.txt");
@@ -56,17 +56,17 @@ public class ExperimentoBusqueda extends AbstractExperimento {
 
 
             lines.add(" ->Tiempo de busqueda de linearProbing: ");
-            String[] search = super.searchTesting(hashLinearProbing, palabras, n, "LinearProbing").split("\n");
+            String[] search = super.searchTesting(hashLinearProbing, palabras, "LinearProbing").split("\n");
             for (String line: search) {
             	lines.add("\t" + line);
             }
             lines.add(" ->Tiempo de busqueda de abTree: ");
-            search = super.searchTesting(abTree, palabras, n, "ABTree").split("\n");
+            search = super.searchTesting(abTree, palabras, "ABTree").split("\n");
             for (String line: search) {
             	lines.add("\t" + line);
             }
             lines.add(" ->Tiempo de busqueda de patriciaTree: ");
-            search = super.searchTesting(patriciaTree, palabras, n, "PatriciaTree").split("\n");
+            search = super.searchTesting(patriciaTree, palabras, "PatriciaTree").split("\n");
             for (String line: search) {
             	lines.add("\t" + line);
             }

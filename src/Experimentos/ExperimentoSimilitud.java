@@ -37,46 +37,52 @@ public class ExperimentoSimilitud extends AbstractExperimento{
             ArrayList<String> palabras1 = TextTools.leerArchivo(dir + "/x00.txt");
             ArrayList<String> palabras2 = TextTools.leerArchivo(dir + "/x01.txt");
 
-            int n = palabras1.size() + palabras2.size();
-            int k = (int)(n * factor)+1;
+            int n1 = palabras1.size();
+            int n2 = palabras2.size();
+            int k1 = (int)(n1 * factor)+1;
+            int k2 = (int)(n2 * factor)+1;
 
             double elementosHash, porcentajeLlenado;
 
-            LinearProbing hashLinearProbing = new LinearProbing(k);
-            IDiccionarioStruct abTree = new ABTree();
-            IDiccionarioStruct patriciaTree = new PatriciaTrie();
+            LinearProbing hashLinearProbing1 = new LinearProbing(k1);
+            IDiccionarioStruct abTree1 = new ABTree();
+            IDiccionarioStruct patriciaTree1 = new PatriciaTrie();
 
-            lines.add(" ->Tiempo de construccion de linearProbing para T1: " + super.timeTesting(hashLinearProbing, palabras1, "LinearProbing"));
-            lines.add(" ->Tamaño  de linearProbing: " + String.valueOf(hashLinearProbing.getSize()));
-            elementosHash = hashLinearProbing.elementos;
-            porcentajeLlenado = elementosHash / n; //TODO revisar si sirve
-            lines.add(" ->Porcentaje de llenado de tabla hash:\t" + porcentajeLlenado);
+            LinearProbing hashLinearProbing2 = new LinearProbing(k2);
+            IDiccionarioStruct abTree2 = new ABTree();
+            IDiccionarioStruct patriciaTree2 = new PatriciaTrie();
 
-            lines.add(" ->Tiempo de construccion de linearProbing para T2: " + super.timeTesting(hashLinearProbing, palabras2, "LinearProbing"));
-            lines.add(" ->Tamaño  de linearProbing: " + String.valueOf(hashLinearProbing.getSize()));
-            elementosHash = hashLinearProbing.elementos;
-            porcentajeLlenado = elementosHash / n; //TODO revisar si sirve
-            lines.add(" ->Porcentaje de llenado de tabla hash:\t" + porcentajeLlenado);
+            lines.add(" ->Tiempo de construccion de linearProbing para T1: " + super.timeTesting(hashLinearProbing1, palabras1, "LinearProbing"));
+            lines.add(" ->Tamaño  de linearProbing1: " + String.valueOf(hashLinearProbing1.getSize()));
+            elementosHash = hashLinearProbing1.elementos;
+            porcentajeLlenado = elementosHash / n1;
+            lines.add(" ->Porcentaje de llenado de tabla hash1:\t" + porcentajeLlenado);
 
-            lines.add(" ->Tiempo de construccion de abTree para T1: " + super.timeTesting(abTree, palabras1, "ABTree"));
-            lines.add(" ->Tamaño  de abTree: " + String.valueOf(abTree.getSize()));
-            lines.add(" ->Tiempo de construccion de abTree para T2: " + super.timeTesting(abTree, palabras2, "ABTree"));
-            lines.add(" ->Tamaño  de abTree: " + String.valueOf(abTree.getSize()));
+            lines.add(" ->Tiempo de construccion de linearProbing para T2: " + super.timeTesting(hashLinearProbing2, palabras2, "LinearProbing"));
+            lines.add(" ->Tamaño  de linearProbing2: " + String.valueOf(hashLinearProbing2.getSize()));
+            elementosHash = hashLinearProbing2.elementos;
+            porcentajeLlenado = elementosHash / n2;
+            lines.add(" ->Porcentaje de llenado de tabla hash2:\t" + porcentajeLlenado);
 
-            lines.add(" ->Tiempo de construccion de patriciaTree para T1: " + super.timeTesting(patriciaTree, palabras1, "LinearProbing"));
-            lines.add(" ->Tamaño  de patriciaTree: " + String.valueOf(patriciaTree.getSize()));
+            lines.add(" ->Tiempo de construccion de abTree para T1: " + super.timeTesting(abTree1, palabras1, "ABTree"));
+            lines.add(" ->Tamaño  de abTree1: " + String.valueOf(abTree1.getSize()));
+            lines.add(" ->Tiempo de construccion de abTree para T2: " + super.timeTesting(abTree2, palabras2, "ABTree"));
+            lines.add(" ->Tamaño  de abTree2: " + String.valueOf(abTree2.getSize()));
 
-            lines.add(" ->Tiempo de construccion de patriciaTree para T2: " + super.timeTesting(patriciaTree, palabras2, "LinearProbing"));
-            lines.add(" ->Tamaño  de patriciaTree: " + String.valueOf(patriciaTree.getSize()));
+            lines.add(" ->Tiempo de construccion de patriciaTree para T1: " + super.timeTesting(patriciaTree1, palabras1, "LinearProbing"));
+            lines.add(" ->Tamaño  de patriciaTree1: " + String.valueOf(patriciaTree1.getSize()));
+
+            lines.add(" ->Tiempo de construccion de patriciaTree para T2: " + super.timeTesting(patriciaTree2, palabras2, "LinearProbing"));
+            lines.add(" ->Tamaño  de patriciaTree2: " + String.valueOf(patriciaTree2.getSize()));
 
 
-            String[] simHash = super.similitud(palabras1, palabras2, hashLinearProbing, "", "LinearProbing").split("&");
-            String[] simAbt = super.similitud(palabras1, palabras2, abTree, "$", "ABTree").split("&");
-            String[] simPatr = super.similitud(palabras1, palabras2, patriciaTree, "", "PatriciaTree").split("&");
+            String[] simHash = super.similitud(palabras1, palabras2, hashLinearProbing1, hashLinearProbing2, "LinearProbing").split("&");
+            String[] simAbt = super.similitud(palabras1, palabras2, abTree1, abTree2, "ABTree").split("&");
+            String[] simPatr = super.similitud(palabras1, palabras2, patriciaTree1, patriciaTree2, "PatriciaTree").split("&");
 
-            lines.add(" ->Tiempo de calculo de similitud de linearProbing: " + simHash[0]);
-            lines.add(" ->Tiempo de calculo de similitud de abTree: " + simAbt[0]);
-            lines.add(" ->Tiempo de calculo de similitud de patriciaTree: " + simPatr[0]);
+            lines.add(" ->Tiempo de calculo de similitud con linearProbing: " + simHash[0]);
+            lines.add(" ->Tiempo de calculo de similitud con abTree: " + simAbt[0]);
+            lines.add(" ->Tiempo de calculo de similitud con patriciaTree: " + simPatr[0]);
 
             lines.add(" ->Similitud con linearProbing: " + simHash[1]);
             lines.add(" ->Similitud con abTree: " + simAbt[1]);

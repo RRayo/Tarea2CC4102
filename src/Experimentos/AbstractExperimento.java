@@ -36,9 +36,9 @@ public abstract class AbstractExperimento {
      */
     public String timeTesting (IDiccionarioStruct d, ArrayList<String> palabras, String tipo) {
         System.err.println("Inicio de test de tiempo de inserción (1 archivo) para: " + tipo);
-        String letraFinal = "";
-        if (tipo.equals("ABTree")) {
-            letraFinal = "$";
+        String letraFinal = "$";
+        if (tipo.equals("LinearProbing")) {
+            letraFinal = "";
         }
         long i = System.nanoTime();
         TextTools.llenarDiccionarioStatic(d, palabras, letraFinal);
@@ -59,9 +59,9 @@ public abstract class AbstractExperimento {
     public String timeTesting (IDiccionarioStruct d, ArrayList<String> palabras1,
                              ArrayList<String> palabras2 , String tipo) {
         System.err.println("Inicio de test de tiempo de inserción (2 archivos) para: " + tipo);
-        String letraFinal = "";
-        if (tipo.equals("ABTree") || tipo.equals("PTrie")) {
-            letraFinal = "$";
+        String letraFinal = "$";
+        if (tipo.equals("LinearProbing")) {
+            letraFinal = "";
         }
         long i = System.nanoTime();
         TextTools.llenarDiccionarioStatic(d, palabras1, letraFinal);
@@ -76,12 +76,13 @@ public abstract class AbstractExperimento {
      * Test para la búsqueda de n/10 palabras seleccionadas al azar desde una lista.
      * @param d Diccionario donde se buscará.
      * @param palabras Lista de palabras de las que se extraerán palabras para buscar en el diccionario.
-     * @param n
-     * @param tipo
-     * @return
+     * @param tipo Tipo de diccionario.
+     * @return String con los tiempos de búsqueda asociados a cada largo de las palabras.
      */
-    public String searchTesting (IDiccionarioStruct d, ArrayList<String> palabras, int n, String tipo) {
+    public String searchTesting (IDiccionarioStruct d, ArrayList<String> palabras, String tipo) {
         System.err.println("Inicio de test de búsqueda de palabras al azar para: " + tipo);
+
+        int n = palabras.size();
         Stack st = this.randomNumbersStack(0, n-1, n/10);
 
         String[] tiemposPorLargo = new String[50]; //arreglo con la contabilidad de tiempo en base al largo
@@ -96,63 +97,79 @@ public abstract class AbstractExperimento {
         }
 
         String formatoVertical = "Tiempos segun largos:\n";
-        //String formatoVectorMatlab = "";
 
-
-        //int[] tiemposPromedios = new int[50];
         for (int i = 0; i<50 ; i++) {
         	if(tiemposPorLargo[i] == ""){
         		continue;
         	}
         	String[] auxSplit1 = tiemposPorLargo[i].split("\\$");
-            //int total = 0;
-            //int size = 0;
             formatoVertical += "largo: " + i + "\t";
             for(String timeLapse : auxSplit1) {
                 String[] auxSplit2 = timeLapse.split("_");
-                //total += Integer.parseInt(auxSplit2[1]) - Integer.parseInt(auxSplit2[0]);
                 formatoVertical += (Long.parseLong(auxSplit2[1]) - Long.parseLong(auxSplit2[0])) + ", ";
-                //size++;
             }
             formatoVertical += "\n";
-            //tiemposPromedios[i] = total/size;
         }
 
         System.err.println("Test finalizado");
         return formatoVertical;
-        //System.out.println("Tiempo total de busqueda para " + tipo + "con " + n/10 + " elementos" + ":\t" + (f-i) );
     }
 
+    /**
+     * Generador aleatorios de Integers en un rango
+     * @param min Mínimo número posible generado.
+     * @param max Máximo némero posible generado.
+     * @param n Total de números generados.
+     * @return Retorna un Stack con los números enteros generados.
+     */
     public Stack randomNumbersStack(int min, int max, int n) {
         Stack st = new Stack();
-        for(int i = 0; i<n; i++) {
+        for(int i = 0; i<=n; i++) {
             int randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
             st.push(randomNum);
         }
         return st;
     }
 
+    /**
+     * Función que calcula la similitud entre 2 conjuntos de palabras a través de un diccionario.
+     * @param palabrasT1 Lista de palabras del 1er archivo que se insertarán en el diccionario.
+     * @param palabrasT2 Lista de palabras del 2do archivo que se insertarán en el diccionario.
+     * @param D1 Diccionario para las palabras del texto 1.
+     * @param D2 Diccionario para las palabras del texto 2.
+     * @param tipo Tipo de diccionario.
+     * @return Retorna un String con el tiempo de ejecución y la similitud entre los archivos.
+     */
     public String similitud(ArrayList<String> palabrasT1, ArrayList<String> palabrasT2
-            , IDiccionarioStruct D, String s, String tipo) {
+            , IDiccionarioStruct D1, IDiccionarioStruct D2, String tipo) {
 
-        double sum = 0;
+        System.err.println("Inicio de test de similitud entre 2 archivos para: " + tipo);
 
+        double total = 0;
 
         long i = System.nanoTime();
         for (String p : palabrasT1) {
-            sum += Math.abs(count(p, D)- count(p, D)); //TODO se puede optimizar solo sumando el largo de palabrasT1 en este caso y solo buscar en D2
+            total += Math.abs(count(p, D1) - count(p, D2));
         }
 
         for (String p : palabrasT2) {
-            sum += Math.abs(count(p, D)- count(p, D));
+            total += Math.abs(count(p, D1) - count(p, D2));
         }
         long f = System.nanoTime();
 
-        //tiempo + resultados
-        return (f-i) + "&" + (1 - (sum / (palabrasT1.size()+palabrasT2.size())));
+        System.err.println("Test finalizado");
+
+        //tiempo & resultados
+        return (f-i) + "&" + (1 - (total / (palabrasT1.size()+palabrasT2.size())));
     }
 
 
+    /**
+     * Devuelve el número de posiciones que tiene una palabra en el Diccionario.
+     * @param palabra Palabra que se buscará.
+     * @param D Diccionario donde se buscará.
+     * @return Retorna la cantidad de veces que aparece la palabra en el texto original.
+     */
     public int count(String palabra, IDiccionarioStruct D) {
         return D.buscar(palabra).size();
     }
