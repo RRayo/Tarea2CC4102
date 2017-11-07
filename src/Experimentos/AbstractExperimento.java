@@ -153,22 +153,30 @@ public abstract class AbstractExperimento {
             letraFinal = "";
         }
 
-        double total = 0;
+        double total = 0, sum = 0;
+        int c1, c2;
 
         long i = System.nanoTime();
         for (String p : palabrasT1) {
-            total += Math.abs(count(p + letraFinal, D1) - count(p + letraFinal, D2));
+            c1 = count(p + letraFinal, D1);
+            c2 = count(p + letraFinal, D2);
+            total += Math.abs(c1 - c2);
+            sum += c1 + c2;
         }
 
         for (String p : palabrasT2) {
-            total += Math.abs(count(p + letraFinal, D1) - count(p + letraFinal, D2));
+            c1 = count(p + letraFinal, D1);
+            c2 = count(p + letraFinal, D2);
+            total += Math.abs(c1 - c2);
+            sum += c1 + c2;
         }
         long f = System.nanoTime();
-
+        System.out.println(total);
+        System.out.println((palabrasT1.size()+palabrasT2.size()));
         System.err.println("Test finalizado");
 
         //tiempo & resultados
-        return (f-i) + "&" + (1 - (total / (palabrasT1.size()+palabrasT2.size())));
+        return (f-i) + "&" + (1 - (total / sum));
     }
 
 
