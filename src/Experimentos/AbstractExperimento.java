@@ -57,7 +57,7 @@ public abstract class AbstractExperimento {
      * @return Retorna tiempo de ejecución en nanosegundos en forma de String.
      */
     public String timeTesting (IDiccionarioStruct d, ArrayList<String> palabras1,
-                             ArrayList<String> palabras2 , String tipo) {
+                               ArrayList<String> palabras2 , String tipo) {
         System.err.println("Inicio de test de tiempo de inserción (2 archivos) para: " + tipo);
         String letraFinal = "$";
         if (tipo.equals("LinearProbing")) {
@@ -81,7 +81,10 @@ public abstract class AbstractExperimento {
      */
     public String searchTesting (IDiccionarioStruct d, ArrayList<String> palabras, String tipo) {
         System.err.println("Inicio de test de búsqueda de palabras al azar para: " + tipo);
-
+        String letraFinal = "$";
+        if (tipo.equals("LinearProbing")) {
+            letraFinal = "";
+        }
         int n = palabras.size();
         Stack st = this.randomNumbersStack(0, n-1, n/10);
 
@@ -91,7 +94,7 @@ public abstract class AbstractExperimento {
         while (!st.empty()) {
             int p = (Integer) st.pop();
             long i = System.nanoTime();
-            d.buscar(palabras.get(p));
+            d.buscar(palabras.get(p)+letraFinal);
             long f = System.nanoTime();
             tiemposPorLargo[palabras.get(p).length()] += i + "_" +f + "$";
         }
@@ -99,10 +102,10 @@ public abstract class AbstractExperimento {
         String formatoVertical = "Tiempos segun largos:\n";
 
         for (int i = 0; i<50 ; i++) {
-        	if(tiemposPorLargo[i] == ""){
-        		continue;
-        	}
-        	String[] auxSplit1 = tiemposPorLargo[i].split("\\$");
+            if(tiemposPorLargo[i] == ""){
+                continue;
+            }
+            String[] auxSplit1 = tiemposPorLargo[i].split("\\$");
             formatoVertical += "largo: " + i + "\t";
             for(String timeLapse : auxSplit1) {
                 String[] auxSplit2 = timeLapse.split("_");
@@ -145,26 +148,31 @@ public abstract class AbstractExperimento {
 
         System.err.println("Inicio de test de similitud entre 2 archivos para: " + tipo);
 
-        double total = 0;
+        String letraFinal = "$";
+        if (tipo.equals("LinearProbing")) {
+            letraFinal = "";
+        }
 
-        double sum = 0;
+        double total = 0, sum = 0;
+        int c1, c2;
 
         long i = System.nanoTime();
         for (String p : palabrasT1) {
-            int c1 = count(p, D1);
-            int c2 = count(p, D2);
-            sum += c1 + c2;
+            c1 = count(p + letraFinal, D1);
+            c2 = count(p + letraFinal, D2);
             total += Math.abs(c1 - c2);
+            sum += c1 + c2;
         }
 
         for (String p : palabrasT2) {
-            int c1 = count(p, D1);
-            int c2 = count(p, D2);
-            sum += c1 + c2;
+            c1 = count(p + letraFinal, D1);
+            c2 = count(p + letraFinal, D2);
             total += Math.abs(c1 - c2);
+            sum += c1 + c2;
         }
         long f = System.nanoTime();
-
+        System.out.println(total);
+        System.out.println((palabrasT1.size()+palabrasT2.size()));
         System.err.println("Test finalizado");
 
         //tiempo & resultados
@@ -179,14 +187,7 @@ public abstract class AbstractExperimento {
      * @return Retorna la cantidad de veces que aparece la palabra en el texto original.
      */
     public int count(String palabra, IDiccionarioStruct D) {
-        int aux = D.buscar(palabra + "$").size();
-
-        if(palabra.equals("yabadaba")){
-            System.out.println(aux);
-            System.out.println(D.getSize());
-        }
-
-        return aux;
+        return D.buscar(palabra).size();
     }
 
     public static void main(String[] args) {
