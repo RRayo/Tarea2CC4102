@@ -5,21 +5,35 @@ import Dictionary.IDiccionarioStruct;
 import java.util.ArrayList;
 import java.util.Stack;
 
+
+/**
+ * Implementacion de la interfaz IDiccionarioStruct
+ * PTnode root es su unico campo, un nodo raiz del arbol.
+ */
 public class PatriciaTrie implements IDiccionarioStruct{
 
     public static PTNode root = new PTNode();
 
 
+    /**
+     * Constructor del PatriciaTrie, recibe como parametro un PTNode para que siva de raiz
+     * @param root
+     */
     public PatriciaTrie(PTNode root) {
-        this.root = root;
+        PatriciaTrie.root = root;
     }
 
     public PatriciaTrie() { }
 
 
-    @Override
+    /**
+     * Implementacion del metodo buscar de la interfa IDiccionarioStruct
+     * Busca un String dentro de la estructura y devuelve lista con posiciones.
+     * @param s String a buscar.
+     * @return lista con posiciones del String en el texto original. Si no está devuelve una lista vacía.
+     */
     public ArrayList<Integer> buscar(String s){
-        INode searchResult = Isearch(this.root, s, 0);
+        INode searchResult = Isearch(this.root, s);
         if(searchResult == null || !searchResult.isLeaf()) {
             return new ArrayList<Integer>();
         } else {
@@ -32,8 +46,14 @@ public class PatriciaTrie implements IDiccionarioStruct{
     }
 
 
-
-    static INode Isearch(INode node, String word, int index) {
+    /**
+     * ISearch : Funcion que realiza una busqueda iterativa sobre el trie
+     * @param node: INode sobre el cual se parte la busqueda
+     * @param word: String con la palabra a buscar
+     * @return un INode que representa a el ultimo nodo al cual se pudo descender
+     */
+    static INode Isearch(INode node, String word) {
+        int index = 0;
         //Si se llega a una hoja se hace una comparacion directa
         while(!(node.isLeaf())){
             PTEdge descendEdge = node.descend(word, index);
@@ -57,7 +77,7 @@ public class PatriciaTrie implements IDiccionarioStruct{
             PTEdge leafEdge = new PTEdge(s , leafNode);
             this.root.addSon(leafEdge);
         } else {
-            INode searchResult = Isearch(this.root, s, 0);
+            INode searchResult = Isearch(this.root, s);
             PTLeaf leaf;
             if (searchResult.isLeaf()) {
                 leaf = (PTLeaf) searchResult;
