@@ -92,7 +92,7 @@ public class ExperimentoBusqueda extends AbstractExperimento {
     }
 
     public static void main (String [ ] args) {
-        ExperimentoBusqueda e = new ExperimentoBusqueda("ex1024",2.5, 10,10);
+        ExperimentoBusqueda e = new ExperimentoBusqueda("ex1024",2.5, 10,11);
     	
     }
 }
