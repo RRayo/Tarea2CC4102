@@ -107,7 +107,7 @@ public class ExperimentoSearchMiss extends  AbstractExperimento{
 
 
     public static void main (String [ ] args) {
-        ExperimentoSearchMiss e = new ExperimentoSearchMiss("testing",2.5, 10,10);
+        ExperimentoSearchMiss e = new ExperimentoSearchMiss("exSearchMiss",2.5, 10,20);
 
     }
 }
