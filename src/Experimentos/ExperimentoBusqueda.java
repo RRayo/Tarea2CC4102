@@ -12,6 +12,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import jdk.nashorn.internal.ir.debug.JSONWriter;
 
 /**
  * Clase para el experimento de búsqueda en diccionarios.
@@ -30,10 +33,20 @@ public class ExperimentoBusqueda extends AbstractExperimento {
         String[] directorios = new String[11];
         ArrayList<String> lines = new ArrayList<>();
         lines.add("------ RESULTADOS EXPERIMENTO 1------");
+
+        String[] ocurrenciasPatriciaTree = new String[51];
+        Arrays.fill(ocurrenciasPatriciaTree, "");
+
+        String[] ocurrenciasAbTree = new String[51];
+        Arrays.fill(ocurrenciasAbTree, "");
+
+        String[] ocurrenciasLinearProbing = new String[51];
+        Arrays.fill(ocurrenciasLinearProbing, "");
+
         Path file = Paths.get(fileName + ".txt");
 
         for(int i = ini; i <= fin; i++) {
-            directorios[i-10] = String.valueOf((int)java.lang.Math.pow(2,i));
+            directorios[i-10] = String.valueOf((int) Math.pow(2,i));
 
         }
 
@@ -69,19 +82,52 @@ public class ExperimentoBusqueda extends AbstractExperimento {
             lines.add(" ->Tiempo de busqueda de linearProbing: ");
             String[] search = super.searchTesting(hashLinearProbing, palabras, "LinearProbing").split("\n");
             for (String line: search) {
+                String[] index = line.split(":");
+                if(index.length > 1){
+                    String[] split = index[1].split("\t");
+                    if(split.length > 1) {
+                        int i = Integer.parseInt(split[0].trim());
+                        ocurrenciasLinearProbing[i] = ocurrenciasLinearProbing[i].concat(split[2]).concat(",");
+                    }
+                }
             	lines.add("\t" + line);
             }
+
             lines.add(" ->Tiempo de busqueda de abTree: ");
-            search = super.searchTesting(abTree, palabras, "ABTree").split("\n");
             for (String line: search) {
+                String[] index = line.split(":");
+                if(index.length > 1){
+                    String[] split = index[1].split("\t");
+                    if(split.length > 1) {
+                        int i = Integer.parseInt(split[0].trim());
+                        ocurrenciasAbTree[i] = ocurrenciasAbTree[i].concat(split[2]).concat(",");
+                    }
+                }
             	lines.add("\t" + line);
             }
             lines.add(" ->Tiempo de busqueda de patriciaTree: ");
             search = super.searchTesting(patriciaTree, palabras, "PatriciaTree").split("\n");
+
+
             for (String line: search) {
+                String[] index = line.split(":");
+                if(index.length > 1){
+                    String[] split = index[1].split("\t");
+                    if(split.length > 1) {
+                        int i = Integer.parseInt(split[0].trim());
+                        ocurrenciasPatriciaTree[i] = ocurrenciasPatriciaTree[i].concat(split[2]).concat(",");
+                    }
+                }
             	lines.add("\t" + line);
             }
+            System.out.println("jobs done");
         }
+        lines.add(arrayToString(ocurrenciasLinearProbing));
+        lines.add(arrayToString(ocurrenciasAbTree));
+        lines.add(arrayToString(ocurrenciasPatriciaTree));
+        System.out.println("Job's done");
+
+
         try {
             Files.write(file, lines, Charset.forName("UTF-8"));
         } catch (IOException e) {
@@ -89,10 +135,15 @@ public class ExperimentoBusqueda extends AbstractExperimento {
         }
 
 
+
+
+
     }
 
+
+
     public static void main (String [ ] args) {
-        ExperimentoBusqueda e = new ExperimentoBusqueda("exBusqueda",2.5, 10,20);
+        ExperimentoBusqueda e = new ExperimentoBusqueda("testJson",2.5, 10,20);
     	
     }
 }
