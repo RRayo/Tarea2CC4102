@@ -106,15 +106,17 @@ public abstract class AbstractExperimento {
 
         for (int i = 0; i<50 ; i++) {
             if(tiemposPorLargo[i] == ""){
+                formatoVertical += "largo: " + i + "\n";
                 continue;
             }
             String[] auxSplit1 = tiemposPorLargo[i].split("\\$");
             formatoVertical += "largo: " + i + "\t";
+            long aux = 0 ;
             for(String timeLapse : auxSplit1) {
                 String[] auxSplit2 = timeLapse.split("_");
-                formatoVertical += (Long.parseLong(auxSplit2[1]) - Long.parseLong(auxSplit2[0])) + ", ";
+                aux += (Long.parseLong(auxSplit2[1]) - Long.parseLong(auxSplit2[0]));
             }
-            formatoVertical += "\n";
+            formatoVertical += "\t" + (aux/auxSplit1.length)+"\n";
         }
 
         System.err.println("Test finalizado");

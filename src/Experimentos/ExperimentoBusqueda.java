@@ -56,7 +56,7 @@ public class ExperimentoBusqueda extends AbstractExperimento {
             lines.add(" ->Tiempo de construccion de linearProbing: " + super.timeTesting(hashLinearProbing, palabras, "LinearProbing"));
             lines.add(" ->Tamaño  de linearProbing: " + String.valueOf(hashLinearProbing.getSize()));
             double elementosHash = hashLinearProbing.elementos;
-            double porcentajeLlenado = elementosHash / n; //TODO revisar si sirve
+            double porcentajeLlenado = elementosHash / n;
             lines.add(" ->Porcentaje de llenado de tabla hash:\t" + porcentajeLlenado);
 
             lines.add(" ->Tiempo de construccion de abTree: " + super.timeTesting(abTree, palabras, "ABTree"));
@@ -92,7 +92,7 @@ public class ExperimentoBusqueda extends AbstractExperimento {
     }
 
     public static void main (String [ ] args) {
-        ExperimentoBusqueda e = new ExperimentoBusqueda("ex1024",2.5, 10,20);
+        ExperimentoBusqueda e = new ExperimentoBusqueda("ex1024",2.5, 10,10);
     	
     }
 }
