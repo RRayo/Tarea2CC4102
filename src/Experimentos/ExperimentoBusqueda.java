@@ -54,16 +54,16 @@ public class ExperimentoBusqueda extends AbstractExperimento {
             IDiccionarioStruct patriciaTree = new PatriciaTrie();
 
             lines.add(" ->Tiempo de construccion de linearProbing: " + super.timeTesting(hashLinearProbing, palabras, "LinearProbing"));
-            lines.add(" ->Tamaño  de linearProbing: " + String.valueOf(hashLinearProbing.getSize()));
+            lines.add(" ->Espacio usado por linearProbing: " + String.valueOf(hashLinearProbing.getSize()));
             double elementosHash = hashLinearProbing.elementos;
             double porcentajeLlenado = elementosHash / n;
             lines.add(" ->Porcentaje de llenado de tabla hash:\t" + porcentajeLlenado);
 
             lines.add(" ->Tiempo de construccion de abTree: " + super.timeTesting(abTree, palabras, "ABTree"));
-            lines.add(" ->Tamaño  de abTree: " + String.valueOf(abTree.getSize()));
+            lines.add(" ->Espacio usado por abTree: " + String.valueOf(abTree.getSize()));
 
             lines.add(" ->Tiempo de construccion de patriciaTree: " + super.timeTesting(patriciaTree, palabras, "PatriciaTree"));
-            lines.add(" ->Tamaño  de patriciaTree: " + String.valueOf(patriciaTree.getSize()));
+            lines.add(" ->Espacio usado por patriciaTree: " + String.valueOf(patriciaTree.getSize()));
 
 
             lines.add(" ->Tiempo de busqueda de linearProbing: ");
