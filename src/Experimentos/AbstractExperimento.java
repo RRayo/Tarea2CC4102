@@ -180,6 +180,7 @@ public abstract class AbstractExperimento {
         System.err.println("Test finalizado");
 
         //tiempo & resultados
+
         return (f-i) + "&" + (1 - (total / sum));
     }
 

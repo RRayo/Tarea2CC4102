@@ -57,7 +57,7 @@ public class ExperimentoSimilitudCompleto extends AbstractExperimento{
 
         String[] directorios = new String[11];
 
-        for(int i = 10; i <= 11; i++) {
+        for(int i = 10; i <= 12; i++) {
             directorios[i-10] = String.valueOf((int)java.lang.Math.pow(2,i));
 
         }
@@ -85,7 +85,7 @@ public class ExperimentoSimilitudCompleto extends AbstractExperimento{
             IDiccionarioStruct patriciaTree2 = new PatriciaTrie();
 
 
-
+            super.timeTesting(hashLinearProbing1, palabras1, "LinearProbing");
             elementosHash = hashLinearProbing1.elementos;
             porcentajeLlenado = elementosHash / n1;
             if (porcentajeLlenado > 0.4) {
@@ -93,6 +93,7 @@ public class ExperimentoSimilitudCompleto extends AbstractExperimento{
                 System.exit(-1);
             }
 
+            super.timeTesting(hashLinearProbing2, palabras2, "LinearProbing");
             elementosHash = hashLinearProbing2.elementos;
             porcentajeLlenado = elementosHash / n1;
             if (porcentajeLlenado > 0.4) {
@@ -100,7 +101,11 @@ public class ExperimentoSimilitudCompleto extends AbstractExperimento{
                 System.exit(-1);
             }
 
+            super.timeTesting(abTree1, palabras1, "ABTree");
+            super.timeTesting(abTree2, palabras2, "ABTree");
 
+            super.timeTesting(patriciaTree1, palabras1, "PatriciaTree");
+            super.timeTesting(patriciaTree2, palabras2, "PatriciaTree");
 
             String[] simHashAux = super.similitud(palabras1, palabras2, hashLinearProbing1, hashLinearProbing2, "LinearProbing").split("&");
             String[] simAbtAux = super.similitud(palabras1, palabras2, abTree1, abTree2, "ABTree").split("&");
@@ -114,6 +119,8 @@ public class ExperimentoSimilitudCompleto extends AbstractExperimento{
             this.simAbt[contador] = Double.parseDouble(simAbtAux[1]);
             this.simPat[contador] = Double.parseDouble(simPatrAux[1]);
 
+
+            contador++;
         }
 
 
@@ -121,10 +128,10 @@ public class ExperimentoSimilitudCompleto extends AbstractExperimento{
 
     public static void main (String [ ] args) {
         ExperimentoSimilitudCompleto e = new ExperimentoSimilitudCompleto(2.5);
-        for (int i = 0; i<11; i++) {
+        for (int i = 0; i<2; i++) {
             System.out.println("hola");
-            System.out.println(e.simAbt[i]);
-            System.out.println(e.tiempoSimPat[i]);
+            System.out.println(e.simHash[i]);
+            System.out.println(e.tiempoSimHash[i]);
         }
 
     }
