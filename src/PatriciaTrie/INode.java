@@ -21,16 +21,49 @@ public interface INode {
 
 
      /**
-      * descend: Este metodo indica
-      * @param word
-      * @param index
-      * @return
+      * descend: Este metodo indica sobre cual de los arcos hijos se puede descender, dado una palabra y un indice de esta
+      * @param word Un string con la palabra que se usa para descender en el arbol
+      * @param index Un int con el indice de la posicion de la palabra que se desea comparar
+      * @return Un arco donde es posible descender o nulo en caso contrario
       */
      PTEdge descend(String word, int index);
+
+
+     /**
+      * addSon: Este metodo agrega un nuevo arco a la coleccion presente en el nodo, estableciendo al nodo como padre del,
+      * nodo al extremo del arco
+      * @param edge Un arco
+      */
      void addSon(PTEdge edge);
+
+
+     /**
+      * getFather: Funcion getter para obtener el padre de un nodo
+      * @return un INode con el nodo padre o nulo si no se tiene uno
+      */
      INode getFather();
+
+     /**
+      * getSons: Metodo getter para obtener la coleccion de arcos de un nodo
+      * @return Una coleccion de arcos
+      */
      TreeSet<PTEdge> getSons();
+
+
+     /**
+      * removeSon: Este metodo recibe un arco y lo elimina del set de hijos del nodo
+      * @param edge: Un arco que se desea eliminar
+      */
      void removeSon(PTEdge edge);
+
+     /**
+      * getSize: Metodo que devuelve una estimacion del tamaño del nodo
+      * @return un int con el tamaño en Bytes
+      */
      int getSize();
+
+     /**
+      * printTree: Una funcion de debugging para imprimir el arbol de ser necesario
+      */
      void printTree();
 }

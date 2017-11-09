@@ -69,7 +69,7 @@ public class MainExperiment {
         }
 
         int i;
-        for(i = 0; i<=1 ; i++) {
+        for(i = 0; i<=5 ; i++) {
 
             ExperimentoBusquedaCompleto expBusqueda = new ExperimentoBusquedaCompleto(2.5);
 
@@ -268,7 +268,10 @@ public class MainExperiment {
     public static String parseMatrix(long[][] matrix) {
         String result = "[";
         for (int i = 0; i < matrix.length; i++) {
-            result += parseArray(matrix[i]).substring(1,matrix[i].length-1) + ";";//escapar []
+            String aux = parseArray(matrix[i]);
+            aux = aux.substring(1,aux.length()); //escapar [
+            aux = aux.replaceAll("]","");
+            result += aux + ";";//escapar []
         }
         return result.substring(0,result.length()-1) + "]";
     }
