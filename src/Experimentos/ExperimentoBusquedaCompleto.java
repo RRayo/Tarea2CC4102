@@ -17,7 +17,7 @@ public class ExperimentoBusquedaCompleto extends AbstractExperimento {
 
     public long[] tiempoInsHash, tiempoInsAbt, tiempoInsPat;
     public int[] sizeHash, sizeAbt, sizePat;
-    public String[] busqHash, busqAbt, busqPat;
+    public long[][] busqHash, busqAbt, busqPat;
 
     static int NUM_ARCHIVOS = 11;
 
@@ -35,9 +35,9 @@ public class ExperimentoBusquedaCompleto extends AbstractExperimento {
         this.sizeAbt = new int[NUM_ARCHIVOS];
         this.sizePat = new int[NUM_ARCHIVOS];
 
-        this.busqHash = new String[NUM_ARCHIVOS];
-        this.busqAbt = new String[NUM_ARCHIVOS];
-        this.busqPat = new String[NUM_ARCHIVOS];
+        this.busqHash = new long[NUM_ARCHIVOS][51];
+        this.busqAbt = new long[NUM_ARCHIVOS][51];
+        this.busqPat = new long[NUM_ARCHIVOS][51];
 
         for (int i = 0; i<NUM_ARCHIVOS; i++) {
             this.tiempoInsAbt[i] = 0;
@@ -48,9 +48,11 @@ public class ExperimentoBusquedaCompleto extends AbstractExperimento {
             this.sizeAbt[i] = 0;
             this.sizePat[i] = 0;
 
-            this.busqHash[i] = "";
-            this.busqAbt[i] = "";
-            this.busqPat[i] = "";
+            for(int j=0; j< 51; j++) {
+                this.busqHash[i][j] = 0;
+                this.busqAbt[i][j] = 0;
+                this.busqPat[i][j] = 0;
+            }
         }
 
 
@@ -100,50 +102,50 @@ public class ExperimentoBusquedaCompleto extends AbstractExperimento {
             s = super.searchTesting(hashLinearProbing, palabras, "LinearProbing").split("\n", 2)[1];
             search = s.split("\n");
             aux = 0;
+
+            int indice = 0;
             for (String line: search) {
                 String[] index = line.split("\t");
                 if(index.length > 1){
-                    this.busqHash[contador] += index[2];
+                    this.busqHash[contador][indice] += Long.parseLong(index[2]);
                 } else {
-                    this.busqHash[contador] += "0";
+                    this.busqHash[contador][indice] += 0;
                 }
-                this.busqHash[contador] += ",";
+                indice++;
                 aux++;
             }
-            this.busqHash[contador] = this.busqHash[contador].substring(0, this.busqHash[contador].length() - 1);
 
+            indice = 0;
             s = super.searchTesting(abTree, palabras, "ABTree").split("\n", 2)[1];
             search = s.split("\n");
             aux = 0;
             for (String line: search) {
                 String[] index = line.split("\t");
                 if(index.length > 1){
-                    this.busqAbt[contador] += index[2];
+                    this.busqAbt[contador][indice] += Long.parseLong(index[2]);
                 } else {
-                    this.busqAbt[contador] += "0";
+                    this.busqAbt[contador][indice] += 0;
                 }
-                this.busqAbt[contador] += ",";
+                indice++;
                 aux++;
             }
-            this.busqAbt[contador] = this.busqAbt[contador].substring(0, this.busqAbt[contador].length() - 1);
 
+            indice = 0;
             s = super.searchTesting(patriciaTree, palabras, "PatriciaTree").split("\n", 2)[1];
             search = s.split("\n");
             aux = 0;
             for (String line: search) {
                 String[] index = line.split("\t");
                 if(index.length > 1){
-                    this.busqPat[contador] += index[2];
+                    this.busqPat[contador][indice] += Long.parseLong(index[2]);
                 } else {
-                    this.busqPat[contador] += "0";
+                    this.busqPat[contador][indice] += 0;
                 }
-                this.busqPat[contador] += ",";
+                indice++;
                 aux++;
             }
-            this.busqPat[contador] = this.busqPat[contador].substring(0, this.busqPat[contador].length() - 1);
 
 
-            System.out.println("jobs done");
 
             contador++;
         }
@@ -160,12 +162,12 @@ public class ExperimentoBusquedaCompleto extends AbstractExperimento {
         //System.out.println(p[1]+"hola");
 
         ExperimentoBusquedaCompleto e = new ExperimentoBusquedaCompleto(2.5);
-        for (int i = 0; i<11; i++) {
+        /*for (int i = 0; i<11; i++) {
             System.out.println("hola");
             System.out.println(e.busqHash[i]);
             System.out.println(e.tiempoInsAbt[i]);
             System.out.println(e.sizeHash[i]);
-        }
+        }*/
 
     }
 }

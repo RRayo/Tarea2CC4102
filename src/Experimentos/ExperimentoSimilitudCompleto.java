@@ -19,10 +19,8 @@ import java.util.ArrayList;
  */
 public class ExperimentoSimilitudCompleto extends AbstractExperimento{
 
-    public long[] tiempoInsHash, tiempoInsAbt, tiempoInsPat;
     public double[] simHash, simAbt, simPat;
     public long[] tiempoSimHash, tiempoSimAbt, tiempoSimPat;
-    public int[] sizeHash, sizeAbt, sizePat;
 
     static int NUM_ARCHIVOS = 11;
 
@@ -32,9 +30,7 @@ public class ExperimentoSimilitudCompleto extends AbstractExperimento{
      *               el 40% máximo de llenado de hash. (Recomendado 2.5)
      */
     public ExperimentoSimilitudCompleto (double factor) {
-        this.tiempoInsHash = new long[NUM_ARCHIVOS]; //guardar tiempos en arreglo de 11
-        this.tiempoInsAbt = new long[NUM_ARCHIVOS];
-        this.tiempoInsPat = new long[NUM_ARCHIVOS];
+
 
         this.simHash = new double[NUM_ARCHIVOS];
         this.simAbt = new double[NUM_ARCHIVOS];
@@ -44,18 +40,9 @@ public class ExperimentoSimilitudCompleto extends AbstractExperimento{
         this.tiempoSimAbt = new long[NUM_ARCHIVOS];
         this.tiempoSimPat = new long[NUM_ARCHIVOS];
 
-        this.sizeHash = new int[NUM_ARCHIVOS]; //guardar tamaños en arreglos de 11
-        this.sizeAbt = new int[NUM_ARCHIVOS];
-        this.sizePat = new int[NUM_ARCHIVOS];
+
 
         for (int i = 0; i<NUM_ARCHIVOS; i++) {
-            this.tiempoInsAbt[i] = 0;
-            this.tiempoInsAbt[i] = 0;
-            this.tiempoInsAbt[i] = 0;
-
-            this.sizeHash[i] = 0;
-            this.sizeAbt[i] = 0;
-            this.sizePat[i] = 0;
 
             this.simHash[i] = 0;
             this.simAbt[i] = 0;
@@ -99,8 +86,6 @@ public class ExperimentoSimilitudCompleto extends AbstractExperimento{
 
 
 
-            this.tiempoInsHash[contador] += Long.parseLong(super.timeTesting(hashLinearProbing1, palabras1, "LinearProbing"));
-            this.sizeHash[contador] += hashLinearProbing1.getSize();
             elementosHash = hashLinearProbing1.elementos;
             porcentajeLlenado = elementosHash / n1;
             if (porcentajeLlenado > 0.4) {
@@ -108,8 +93,6 @@ public class ExperimentoSimilitudCompleto extends AbstractExperimento{
                 System.exit(-1);
             }
 
-            this.tiempoInsHash[contador] += Long.parseLong(super.timeTesting(hashLinearProbing2, palabras2, "LinearProbing"));
-            this.sizeHash[contador] += hashLinearProbing2.getSize();
             elementosHash = hashLinearProbing2.elementos;
             porcentajeLlenado = elementosHash / n1;
             if (porcentajeLlenado > 0.4) {
@@ -117,18 +100,6 @@ public class ExperimentoSimilitudCompleto extends AbstractExperimento{
                 System.exit(-1);
             }
 
-
-            this.tiempoInsAbt[contador] += Long.parseLong(super.timeTesting(abTree1, palabras1, "ABTree"));
-            this.sizeAbt[contador] += abTree1.getSize();
-
-            this.tiempoInsAbt[contador] += Long.parseLong(super.timeTesting(abTree2, palabras2, "ABTree"));
-            this.sizeAbt[contador] += abTree1.getSize();
-
-            this.tiempoInsPat[contador] += Long.parseLong(super.timeTesting(patriciaTree1, palabras1, "PatriciaTree"));
-            this.sizePat[contador] += patriciaTree1.getSize();
-
-            this.tiempoInsPat[contador] += Long.parseLong(super.timeTesting(patriciaTree2, palabras2, "PatriciaTree"));
-            this.sizePat[contador] += patriciaTree2.getSize();
 
 
             String[] simHashAux = super.similitud(palabras1, palabras2, hashLinearProbing1, hashLinearProbing2, "LinearProbing").split("&");
@@ -153,8 +124,6 @@ public class ExperimentoSimilitudCompleto extends AbstractExperimento{
         for (int i = 0; i<11; i++) {
             System.out.println("hola");
             System.out.println(e.simAbt[i]);
-            System.out.println(e.sizeAbt[i]);
-            System.out.println(e.tiempoInsAbt[i]);
             System.out.println(e.tiempoSimPat[i]);
         }
 

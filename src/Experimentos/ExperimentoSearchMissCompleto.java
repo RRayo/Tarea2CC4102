@@ -7,7 +7,7 @@ import TernaryTree.ABTree;
 import TextTools.TextTools;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
 
 
 /**
@@ -15,7 +15,7 @@ import java.util.Arrays;
  */
 public class ExperimentoSearchMissCompleto extends AbstractExperimento {
 
-    public String[] SearchMissHash, SearchMissAbt, SearchMissPat;
+    public long[][] SearchMissHash, SearchMissAbt, SearchMissPat;
 
     static int NUM_ARCHIVOS = 11;
 
@@ -28,14 +28,16 @@ public class ExperimentoSearchMissCompleto extends AbstractExperimento {
      */
     public ExperimentoSearchMissCompleto(double factor) { //factor para elegir el k en base al n
 
-        this.SearchMissHash = new String[NUM_ARCHIVOS];
-        this.SearchMissAbt = new String[NUM_ARCHIVOS];
-        this.SearchMissPat = new String[NUM_ARCHIVOS];
+        this.SearchMissHash = new long[NUM_ARCHIVOS][51];
+        this.SearchMissAbt = new long[NUM_ARCHIVOS][51];
+        this.SearchMissPat = new long[NUM_ARCHIVOS][51];
 
         for (int i = 0; i<NUM_ARCHIVOS; i++) {
-            this.SearchMissHash[i] = "";
-            this.SearchMissAbt[i] = "";
-            this.SearchMissPat[i] = "";
+            for(int j=0; j< 51; j++) {
+                this.SearchMissHash[i][j] = 0;
+                this.SearchMissAbt[i][j] = 0;
+                this.SearchMissPat[i][j] = 0;
+            }
         }
 
 
@@ -78,52 +80,50 @@ public class ExperimentoSearchMissCompleto extends AbstractExperimento {
             String s;
             int aux;
 
+            int indice = 0;
             s = super.searchTesting(hashLinearProbing, palabrasMissExperiment, "LinearProbing").split("\n", 2)[1];
             search = s.split("\n");
             aux = 0;
             for (String line: search) {
                 String[] index = line.split("\t");
                 if(index.length > 1){
-                    this.SearchMissHash[contador] += index[2];
+                    this.SearchMissHash[contador][indice] += Long.parseLong(index[2]);
                 } else {
-                    this.SearchMissHash[contador] += "0";
+                    this.SearchMissHash[contador][indice] += 0;
                 }
-                this.SearchMissHash[contador] += ",";
+                indice++;
                 aux++;
             }
-            this.SearchMissHash[contador] = this.SearchMissHash[contador].substring(0, this.SearchMissHash[contador].length() - 1);
 
+            indice = 0;
             s = super.searchTesting(abTree, palabrasMissExperiment, "ABTree").split("\n", 2)[1];
             search = s.split("\n");
             aux = 0;
             for (String line: search) {
                 String[] index = line.split("\t");
                 if(index.length > 1){
-                    this.SearchMissAbt[contador] += index[2];
+                    this.SearchMissAbt[contador][indice] += Long.parseLong(index[2]);
                 } else {
-                    this.SearchMissAbt[contador] += "0";
+                    this.SearchMissAbt[contador][indice] += 0;
                 }
-                this.SearchMissAbt[contador] += ",";
+                indice++;
                 aux++;
             }
-            this.SearchMissAbt[contador] = this.SearchMissAbt[contador].substring(0, this.SearchMissAbt[contador].length() - 1);
 
+            indice = 0;
             s = super.searchTesting(patriciaTree, palabrasMissExperiment, "PatriciaTree").split("\n", 2)[1];
             search = s.split("\n");
             aux = 0;
             for (String line: search) {
                 String[] index = line.split("\t");
                 if(index.length > 1){
-                    this.SearchMissPat[contador] += index[2];
+                    this.SearchMissPat[contador][indice] += Long.parseLong(index[2]);
                 } else {
-                    this.SearchMissPat[contador] += "0";
+                    this.SearchMissPat[contador][indice] += 0;
                 }
-                this.SearchMissPat[contador] += ",";
+                indice++;
                 aux++;
             }
-            this.SearchMissPat[contador] = this.SearchMissPat[contador].substring(0, this.SearchMissPat[contador].length() - 1);
-
-
 
             contador++;
         }
