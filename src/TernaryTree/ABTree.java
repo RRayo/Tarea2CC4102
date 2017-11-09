@@ -18,7 +18,7 @@ public class ABTree implements IDiccionarioStruct{
     @Override
     public ArrayList<Integer> buscar (String s) {
         IABTNode result = Isearch(root, s, 0);
-        if(!result.getKey().equals(s)){
+        if(result.isNull() || !result.getKey().equals(s)){
             return new ArrayList<Integer>();
         } else {
             return result.getValue();
@@ -27,6 +27,9 @@ public class ABTree implements IDiccionarioStruct{
 
     public static IABTNode Isearch (IABTNode node, String word, int index) {
         while(!(index == word.length())) {
+            if(node.isNull()){
+                break;
+            }
             IABTNode descendNode = node.getSon(node.descend(word.charAt(index)));
             int newIndex = index;
             if (node.getChar() == word.charAt(index)) {
