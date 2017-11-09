@@ -58,17 +58,6 @@ public class ExperimentoBusquedaCompleto extends AbstractExperimento {
 
         String[] directorios = new String[11];
 
-
-        String[] ocurrenciasPatriciaTree = new String[51];
-        Arrays.fill(ocurrenciasPatriciaTree, "");
-
-        String[] ocurrenciasAbTree = new String[51];
-        Arrays.fill(ocurrenciasAbTree, "");
-
-        String[] ocurrenciasLinearProbing = new String[51];
-        Arrays.fill(ocurrenciasLinearProbing, "");
-
-
         for(int i = 10; i <= 11; i++) {
             directorios[i-10] = String.valueOf((int) Math.pow(2,i));
 
