@@ -194,52 +194,24 @@ public abstract class AbstractExperimento {
         return D.buscar(palabra).size();
     }
 
-    public static void main(String[] args) {
-        /*int factor = 3;
 
-        String[] directorios = new String[11];
-        ArrayList<String> lines = new ArrayList<>();
-        lines.add("------ RESULTADOS ------");
-        Path file = Paths.get("results.txt");
-
-
-        for(int i = 10; i <= 20; i++) {
-            directorios[i-10] = String.valueOf((int)java.lang.Math.pow(2,i));
+    /**
+     * arrayToString: Devuelve un string parseado a un formato para su procesamiento
+     * @param arreglo Un arreglo de string de tamaño 50
+     * @return EL arreglo parseado en un string
+     */
+    public static String arrayToString(String[] arreglo) {
+        String parsed = "{";
+        for(int i = 0; i< arreglo.length; i++) {
+            if(arreglo[i].length() == 0){
+                parsed += arreglo[i].length() + ";";
+            } else {
+                parsed += arreglo[i] + ";";
+            }
 
         }
-
-
-        for(String dir : directorios) {
-
-
-            lines.add("Tamaño: " + dir);
-
-            ArrayList<String> palabras = TextTools.leerArchivo(dir + "/x00.txt");
-
-            int n = palabras.size();
-            int k = n * factor;
-
-            LinearProbing hashLinearProbing = new LinearProbing(k);
-            IDiccionarioStruct abTree = new ABTree();
-            IDiccionarioStruct patriciaTree = new PatriciaTrie();
-
-            lines.add(" ->Tiempo de construccion de linearProbing: " + timeTesting(hashLinearProbing, palabras, "LinearProbing"));
-            lines.add(" ->Tamaño  de linearProbing: " + String.valueOf(hashLinearProbing.getSize()));
-            double elementosHash = hashLinearProbing.elementos;
-            double porcentajeLlenado = elementosHash / n; //TODO revisar si sirve
-            lines.add(" ->Porcentaje de llenado de tabla hash:\t" + porcentajeLlenado);
-
-            lines.add(" ->Tiempo de construccion de abTree: " + timeTesting(abTree, palabras, "ABTree"));
-            lines.add(" ->Tamaño  de abTree: " + String.valueOf(abTree.getSize()));
-
-            lines.add(" ->Tiempo de construccion de patriciaTree: " + timeTesting(patriciaTree, palabras, "LinearProbing"));
-            lines.add(" ->Tamaño  de patriciaTree: " + String.valueOf(patriciaTree.getSize()));
-        }
-        try {
-            Files.write(file, lines, Charset.forName("UTF-8"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
+        parsed += "}";
+        return parsed;
     }
+
 }
