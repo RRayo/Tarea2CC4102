@@ -60,7 +60,7 @@ public class ExperimentoBusquedaCompleto extends AbstractExperimento {
 
         String[] directorios = new String[11];
 
-        for(int i = 10; i <= 11; i++) {
+        for(int i = 10; i <= 20; i++) {
             directorios[i-10] = String.valueOf((int) Math.pow(2,i));
 
         }

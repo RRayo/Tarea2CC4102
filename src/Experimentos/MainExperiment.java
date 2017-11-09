@@ -114,6 +114,32 @@ public class MainExperiment {
         ArrayList<String> lines = new ArrayList<>();
         Path file = Paths.get("results" + ".txt");
 
+        /*
+        Experimento busqueda:
+        tiempoInsHash
+        tiempoInsAbt
+        tiempoInsPat
+        sizeHash
+        sizeAbt
+        sizePat
+        busqHash
+        busqAbt
+        busqPat
+
+        Experimento similitud:
+        simHash
+        simAbt
+        simPat
+        tiempoSimHash
+        tiempoSimAbt
+        tiempoSimPat
+
+        Experimento SearchMiss
+        SearchMissHash
+        SearchMissAbt
+        SearchMissPat
+         */
+
         lines.add(parseArray(meanArray(tiempoInsHash,i)));
         lines.add(parseArray(meanArray(tiempoInsAbt,i)));
         lines.add(parseArray(meanArray(tiempoInsPat,i)));

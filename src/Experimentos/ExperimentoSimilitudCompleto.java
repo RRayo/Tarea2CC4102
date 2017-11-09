@@ -57,7 +57,7 @@ public class ExperimentoSimilitudCompleto extends AbstractExperimento{
 
         String[] directorios = new String[11];
 
-        for(int i = 10; i <= 11; i++) {
+        for(int i = 10; i <= 20; i++) {
             directorios[i-10] = String.valueOf((int)java.lang.Math.pow(2,i));
 
         }
@@ -113,6 +113,8 @@ public class ExperimentoSimilitudCompleto extends AbstractExperimento{
             this.simHash[contador] = Double.parseDouble(simHashAux[1]);
             this.simAbt[contador] = Double.parseDouble(simAbtAux[1]);
             this.simPat[contador] = Double.parseDouble(simPatrAux[1]);
+
+            contador++;
 
         }
 
