@@ -11,6 +11,9 @@ import java.util.Stack;
  */
 public class PatriciaTrie implements IDiccionarioStruct{
 
+    /**
+     * root: PTNode que representa la raiz del arbol
+     */
     public PTNode root = new PTNode();
 
 
@@ -22,6 +25,9 @@ public class PatriciaTrie implements IDiccionarioStruct{
         this.root = root;
     }
 
+    /**
+     * Constructor predeterminado del Patricia trie
+     */
     public PatriciaTrie() { }
 
 
@@ -185,7 +191,7 @@ public class PatriciaTrie implements IDiccionarioStruct{
     /**
      * getSize: Implementacion del getSize insertar de la interfaz IDiccionarioStruct, llama recursivamente la funcion
      * getSize en el nodo raiz
-     * @return un int que llama
+     * @return un int que representa el tamaño en Bytes
      */
     public int getSize() {
         return 16 + 8 + root.getSize();

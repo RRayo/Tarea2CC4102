@@ -3,7 +3,7 @@ package PatriciaTrie;
 import java.util.TreeSet;
 
 /**
- * Interfaz para las estructuras de los nodos que componen lso Patricia Tries.
+ * Interfaz para las estructuras de los nodos que componen los Patricia Tries.
  */
 public interface INode {
      /**

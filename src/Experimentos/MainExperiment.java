@@ -1,11 +1,6 @@
 package Experimentos;
 
 
-/*
-faltaría hacer una clase que genere cada experimento un número de veces,
-calcule el promedio por los elementos y escriba un archivo con los resultados
- */
-
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -16,6 +11,9 @@ import java.util.Arrays;
 
 public class MainExperiment {
     public static void main(String[] args){
+        //Numero de iteraciones
+        int iteraciones = 1;
+
         long[] tiempoInsHash = new long[11];
         long[] tiempoInsAbt = new long[11];
         long[] tiempoInsPat = new long[11];
@@ -69,7 +67,7 @@ public class MainExperiment {
         }
 
         int i;
-        for(i = 0; i<=5 ; i++) {
+        for(i = 0; i <= iteraciones ; i++) {
 
             ExperimentoBusquedaCompleto expBusqueda = new ExperimentoBusquedaCompleto(2.5);
 
@@ -108,7 +106,6 @@ public class MainExperiment {
             SearchMissPat = sumArrays(SearchMissPat, expSearchMiss.SearchMissPat);
 
 
-            System.out.println("---------------------------------------------------------");
         }
         //sacar promedio, escribir
         ArrayList<String> lines = new ArrayList<>();
@@ -275,39 +272,6 @@ public class MainExperiment {
         }
         return result.substring(0,result.length()-1) + "]";
     }
-    /*
-    public static String parseStringArray(String[] values) {
-        for(int i = 0; i < values.length; i++) {
-            String[] values = part.split(",");
-            int sum = 0;
-            for(int i = 0; i < values.length; i++) {
-                sum+=Integer.parseInt(values[i]);
-            }
-            result+=String.valueOf(sum) + ";";
 
-        }
-
-        return result + "}";
-    }*/
-
-    /*
-    public static String parseStringArray(String array) {
-        String result = "{";
-        array = array.substring(1,array.length());//escape {
-        array = array.replaceAll("}","");//escape }
-        String[] parsed = array.split(";");
-        for(String part : parsed) {
-            String[] values = part.split(",");
-            int sum = 0;
-            for(int i = 0; i < values.length; i++) {
-                sum+=Integer.parseInt(values[i]);
-            }
-            result+=String.valueOf(sum) + ";";
-
-        }
-
-        return result + "}";
-    }*/
 }
 
-//[[1,2,3],[3,4,5]] -> [1,2,3;3,4,5] ?

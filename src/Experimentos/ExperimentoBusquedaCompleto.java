@@ -21,6 +21,8 @@ public class ExperimentoBusquedaCompleto extends AbstractExperimento {
 
     static int NUM_ARCHIVOS = 11;
 
+    static int rangoArchivos = 11;
+
     /**
      * Constructor para el experimento de búsqueda para los 10 archivos en potencias de 2.
      * @param factor Factor por el que se multiplicará la cantidad de palabras para asegurar
@@ -60,7 +62,7 @@ public class ExperimentoBusquedaCompleto extends AbstractExperimento {
 
         String[] directorios = new String[11];
 
-        for(int i = 10; i <= 20; i++) {
+        for(int i = 10; i <= rangoArchivos; i++) {
             directorios[i-10] = String.valueOf((int) Math.pow(2,i));
 
         }

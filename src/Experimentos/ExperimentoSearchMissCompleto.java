@@ -19,7 +19,10 @@ public class ExperimentoSearchMissCompleto extends AbstractExperimento {
 
     static int NUM_ARCHIVOS = 11;
 
+    static int rangoArchivos = 11;
+
     private static ArrayList<String> palabrasSearchMiss = TextTools.searchMissTexts("searchMiss.txt");
+
 
     /**
      * Constructor para el experimento de searchMiss para los 10 archivos en potencias de 2.
@@ -46,7 +49,7 @@ public class ExperimentoSearchMissCompleto extends AbstractExperimento {
         String[] directorios = new String[11];
 
 
-        for(int i = 10; i <= 20; i++) {
+        for(int i = 10; i <= rangoArchivos; i++) {
             directorios[i-10] = String.valueOf((int) Math.pow(2,i));
 
         }
